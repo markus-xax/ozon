@@ -1,0 +1,51 @@
+version: '3.3'
+services:
+  prod_postgres:
+    container_name: prod_postgres
+    image: postgres
+    ports:
+      - 5461:5432
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: auth_db
+    networks:
+      - auth1
+  
+  prod_php-fpm:
+    container_name: prod_php-fpm
+    build:
+      context: ./
+      dockerfile: ./build/php-fpm-prod/Dockerfile
+      args:
+        - XDEBUG_MODE
+        - XDEBUG_CLIENT_HOST
+    environment:
+      - SYMFONY_ENV
+      - PHP_IDE_CONFIG
+    ports:
+      - 9613:9000
+    volumes:
+      - ./symfony:/var/www/symfony:cached
+      - ./logs/symfony:/var/www/symfony/var/log:cached
+    depends_on:
+      - prod_postgres
+    networks:
+      - auth1
+  
+  prod_nginx:
+    image: nginx:latest
+    container_name: prod_nginx
+    ports:
+      - 8561:80
+    depends_on:
+      - prod_php-fpm
+    networks:
+      - auth1
+    volumes:
+      - ./build/nginx-prod/local:/etc/nginx/conf.d/
+      - ./build/nginx-prod/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf
+      - ./auth/public:/var/www/auth/public:rw,cached
+
+networks:
+  auth1:

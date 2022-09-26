@@ -1,0 +1,774 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../../styles/index/styles.css" rel="stylesheet">
+    <link href="../../styles/index/vendor.css" rel="stylesheet">
+    <link href="../../styles/summary/summary.css" rel="stylesheet">
+    <link href="../../styles/summary/table.css" rel="stylesheet">
+    <link href="../../styles/summary/table2.css" rel="stylesheet">
+    <link href="../../styles/seo/selection.css" rel="stylesheet">
+    <link href="../../styles/seo/slider.css" rel="stylesheet">
+
+{% endblock %}
+{% block body %}
+    <div id="mp-stats-app" class="main-content container-fluid">
+        <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+            <div class="ag-overlay-panel">
+                <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                    <div class="mp-loader-static"></div>
+                </div>
+            </div>
+        </div>
+        <div data-v-0ead128c="" id="app-layout">
+            <div data-v-89868bce="" data-v-0ead128c="" class="card card-table">
+                <div data-v-89868bce="" class="card-header d-flex justify-content-between">
+                    <div data-v-89868bce="">
+                        Подбор запросов
+                        <span data-v-89868bce="" class="card-subtitle">Данные рассчитываются за последние 30 суток, обновляются каждый день в 03:00 MSK</span>
+                    </div>
+                    <div data-v-0b49be3c="" data-v-89868bce="" class="d-inline-block text-left mr-1 switcher-xs">
+                        <div data-v-0b49be3c="" class="switcher-button-wrapper">
+                            <div data-v-0b49be3c="" class="switch-button mr-1 switch-button-xs switcher-fbs"><input
+                                        data-v-0b49be3c="" type="checkbox" name="switcher-element-36636"
+                                        id="switcher-element-36636"> <span data-v-0b49be3c=""><label data-v-0b49be3c=""
+                                                                                                     for="switcher-element-36636"></label></span>
+                            </div>
+                            <span data-v-0b49be3c="" class="switcher-text"></span></div>
+                    </div>
+                </div>
+                <div data-v-89868bce="" class="card-body">
+                    <div data-v-89868bce="" class="row mb-2 mt-2">
+                        <div data-v-89868bce="" class="col-12">
+                            <form method="get">
+                                <div data-v-2cb18cd6="" data-v-89868bce="" class="mr-5 ml-5 flex-grow-1">
+                                    <div data-v-2cb18cd6="" class="d-flex align-items-center"><span data-v-2cb18cd6=""
+                                                                                                    class="mr-3">Содержит</span>
+                                        <input value="{{ word??'' }}" name="word" type="text"
+                                               placeholder="ключевая фраза"
+                                               class="w-100 p-1 form-control form-control-sm"></div>
+                                    <div id="adv_search">
+                                        <div data-v-2cb18cd6="" class="row">
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Частота не менее</span>
+                                                    <span data-v-2cb18cd6="" title="Частотность запроса по OZON"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                                height="1em"
+                                                                focusable="false" role="img"
+                                                                aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g
+                                                                    data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="countMin" value="{{ count_min??'' }}" class="number w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Брендов не более</span> <span
+                                                            data-v-2cb18cd6=""
+                                                            title="Кол-во брендов не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                                height="1em"
+                                                                focusable="false" role="img"
+                                                                aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g
+                                                                    data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="brandsMax" value="{{ brands_max??'' }}" class="number w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span data-v-2cb18cd6="">Результатов не более</span>
+                                                    <span data-v-2cb18cd6=""
+                                                          title="Кол-во результатов в выдаче не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                                height="1em"
+                                                                focusable="false" role="img"
+                                                                aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g
+                                                                    data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="resultsMax" value="{{ results_max??'' }}"
+                                                       class="number w150 form-control form-control-xs"></div>
+                                        </div>
+                                        <div data-v-2cb18cd6="" class="row">
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Продавцов не более</span> <span
+                                                            data-v-2cb18cd6="" title="Кол-во продавцов не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                                height="1em"
+                                                                focusable="false" role="img"
+                                                                aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g
+                                                                    data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="sellersMax" value="{{ sellers_max??'' }}"
+                                                       class="number w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Товаров не более</span> <span
+                                                            data-v-2cb18cd6=""
+                                                            title="Кол-во товаров не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                                height="1em"
+                                                                focusable="false" role="img"
+                                                                aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g
+                                                                    data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="itemsMax" value="{{ items_max??'' }}" class="number w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left my-float-left-2">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Средняя цена от</span> <span
+                                                            data-v-2cb18cd6=""
+                                                            title="Средняя цена"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                                height="1em"
+                                                                focusable="false" role="img"
+                                                                aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g
+                                                                    data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="final_price_averageMin"
+                                                       value="{{ final_price_average_min??'' }}" class="number w150 form-control form-control-xs mr-5"> <span
+                                                        data-v-2cb18cd6=""
+                                                        class="mr-5">до</span>
+                                                <input name="final_price_averageMax"
+                                                       value="{{ final_price_average_max??'' }}" class="number w150 form-control form-control-xs"></div>
+                                        </div>
+                                        <div data-v-2cb18cd6="" class="row">
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Выручка не менее</span> <span
+                                                            data-v-2cb18cd6=""
+                                                            title="Выручка не менее"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                                height="1em"
+                                                                focusable="false" role="img"
+                                                                aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g
+                                                                    data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="revenueMin" value="{{ revenue_min??'' }}"
+                                                       class="number w150 form-control form-control-xs"></div>
+                                        </div> <!---->
+                                    </div>
+                                    <div data-v-2cb18cd6="" class="row mt-3">
+                                        <div data-v-2cb18cd6="" class="d-flex mt-5 mb-3 col-12">
+                                            <div data-v-2cb18cd6="" class="w270"><span data-v-2cb18cd6="">% товаров с продажами</span>
+                                                <span data-v-2cb18cd6="" title="Процент товаров, имеющих продажи"><svg
+                                                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                            height="1em"
+                                                            focusable="false" role="img" aria-label="question circle"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                            </div>
+                                            <div data-v-2cb18cd6="" class="w-100 vue-slider vue-slider-ltr"
+                                                 style="padding: 7px 0px; width: auto; height: 4px;">
+                                                <label>
+                                                    От
+                                                    <input value="{{ items_with_sells_percent_min??'' }}"
+                                                           name="items_with_sells_percentMin" type="number" min="0"
+                                                           max="100">
+                                                </label>
+                                                <label>
+                                                    До
+                                                    <input value="{{ items_with_sells_percent_max??'' }}"
+                                                           name="items_with_sells_percentMax" type="number" min="0"
+                                                           max="100">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div data-v-2cb18cd6="" class="d-flex mt-5 mb-3 col-12">
+                                            <div data-v-2cb18cd6="" class="w270"><span data-v-2cb18cd6="">% продавцов с продажами</span>
+                                                <span data-v-2cb18cd6="" title="Процент продавцов, имеющих продажи"><svg
+                                                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                            height="1em"
+                                                            focusable="false" role="img" aria-label="question circle"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                            </div>
+                                            <div data-v-2cb18cd6="" class="w-100 vue-slider vue-slider-ltr"
+                                                 style="padding: 7px 0px; width: auto; height: 4px;">
+                                                <label>
+                                                    От
+                                                    <input name="sellers_with_sells_percentMin"
+                                                           value="{{ sellers_with_sells_percent_min??'' }}"
+                                                           type="number"
+                                                           min="0" max="100">
+                                                </label>
+                                                <label>
+                                                    До
+                                                    <input name="sellers_with_sells_percentMax"
+                                                           value="{{ sellers_with_sells_percent_max??'' }}"
+                                                           type="number"
+                                                           min="0" max="100">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div data-v-2cb18cd6="" class="d-flex mt-5 mb-3 col-12">
+                                            <div data-v-2cb18cd6="" class="w270"><span data-v-2cb18cd6="">% брендов с продажами</span>
+                                                <span data-v-2cb18cd6="" title="Процент брендов, имеющих продажи"><svg
+                                                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em"
+                                                            height="1em"
+                                                            focusable="false" role="img" aria-label="question circle"
+                                                            xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                            </div>
+                                            <div data-v-2cb18cd6="" class="w-100 vue-slider vue-slider-ltr"
+                                                 style="padding: 7px 0px; width: auto; height: 4px;">
+                                                <label>
+                                                    От
+                                                    <input name="brands_with_sells_percentMin"
+                                                           value="{{ brands_with_sells_percent_min??'' }}" type="number"
+                                                           min="0" max="100">
+                                                </label>
+                                                <label>
+                                                    До
+                                                    <input name="brands_with_sells_percentMax"
+                                                           value="{{ brands_with_sells_percent_max??'' }}" type="number"
+                                                           min="0" max="100">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div data-v-2cb18cd6="" class="mt-2 d-flex">
+                                        <button type="submit" data-v-2cb18cd6="" class="btn btn-primary mr-3">Применить
+                                        </button>
+                                        <button data-v-2cb18cd6="" type="button" class="btn btn-outline-secondary mr-7">
+                                            Сбросить
+                                        </button>
+                                        <button name="adv_search" onclick="advancedSearch(this)" data-v-2cb18cd6=""
+                                                type="button" class="btn btn-secondary">
+                                            <svg data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                 focusable="false" role="img" aria-label="input cursor text"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                 class="bi-input-cursor-text b-icon bi">
+                                                <g data-v-2cb18cd6="">
+                                                    <path fill-rule="evenodd"
+                                                          d="M5 2a.5.5 0 0 1 .5-.5c.862 0 1.573.287 2.06.566.174.099.321.198.44.286.119-.088.266-.187.44-.286A4.165 4.165 0 0 1 10.5 1.5a.5.5 0 0 1 0 1c-.638 0-1.177.213-1.564.434a3.49 3.49 0 0 0-.436.294V7.5H9a.5.5 0 0 1 0 1h-.5v4.272c.1.08.248.187.436.294.387.221.926.434 1.564.434a.5.5 0 0 1 0 1 4.165 4.165 0 0 1-2.06-.566A4.561 4.561 0 0 1 8 13.65a4.561 4.561 0 0 1-.44.285 4.165 4.165 0 0 1-2.06.566.5.5 0 0 1 0-1c.638 0 1.177-.213 1.564-.434.188-.107.335-.214.436-.294V8.5H7a.5.5 0 0 1 0-1h.5V3.228a3.49 3.49 0 0 0-.436-.294A3.166 3.166 0 0 0 5.5 2.5.5.5 0 0 1 5 2z"></path>
+                                                    <path d="M10 5h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4v1h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-4v1zM6 5V4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4v-1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4z"></path>
+                                                </g>
+                                            </svg>
+                                            Расширенный поиск
+                                        </button>
+                                        <div data-v-89868bce="" data-v-2cb18cd6="" class="ml-auto"><span
+                                                    data-v-89868bce=""
+                                                    data-v-2cb18cd6=""
+                                                    class="cursor-pointer dashed text-muted">
+									Количество скрытых колонок:
+									<span data-v-89868bce="" data-v-2cb18cd6="" class="ml-1">1</span></span></div>
+                                    </div> <!----></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div data-v-89868bce="" class="ag-height-75">
+                        <div groupdisplaytype="singleColumn" class="ag-theme-material">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div><!---->
+            <div class="snotify snotify-left_top"></div>
+            <div class="snotify snotify-left_center"></div>
+            <div class="snotify snotify-left_bottom"></div>
+            <div class="snotify snotify-right_top"></div>
+            <div class="snotify snotify-right_center"></div>
+            <div class="snotify snotify-right_bottom"></div>
+            <div class="snotify snotify-center_top"></div>
+            <div class="snotify snotify-center_center"></div>
+            <div class="snotify snotify-center_bottom"></div>
+        </div>
+    </div>
+    <script>
+        let option = {}
+        document.addEventListener("DOMContentLoaded", () => {
+            option = {...getOptions()}
+            option['columnDefs'] = [
+                {
+                    headerName: '',
+                    field: 'word',
+                    minWidth:150,
+                    cellRenderer: params => `<div> <a href="https://wildberries.ru/catalog/0/search.aspx?search=${ params.value??'' }&amp;xsearch=true" target="_blank" title="Открыть в поиске на Wildberries" class="mr-1"> <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img" aria-label="search" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-search b-icon bi"> <g> <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path> </g> </svg> </a><a href="/seo/keyword/${ params.value??'' }" target="_blank" title="Информация по ключевому слову">${ params.value??'' }</a> </div>`
+                },
+                {
+                    headerName: 'Частота',
+                    field: 'count',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Результатов',
+                    field: 'results',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Продаж',
+                    field: 'sales',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Товаров',
+                    field: 'items'
+                },
+                {
+                    headerName: 'Товаров с продажами',
+                    field: 'items_with_sells'
+                },
+                {
+                    headerName: '% Товаров с продажами',
+                    field: 'items_with_sells_percent'
+                },
+                {
+                    headerName: 'Продавцов',
+                    field: 'sellers'
+                },
+                {
+                    headerName: 'Продавцов с продажами',
+                    field: 'sellers_with_sells'
+                },
+                {
+                    headerName: '% Продавцов с продажами',
+                    field: 'sellers_with_sells_percent'
+                },
+                {
+                    headerName: 'Брендов',
+                    field: 'brands'
+                },
+                {
+                    headerName: 'Брендов с продажами',
+                    field: 'brands_with_sells'
+                },
+                {
+                    headerName: '% Брендов с продажами',
+                    field: 'brands_with_sells_percent'
+                },
+                {
+                    headerName: 'Мин. цена',
+                    field: 'final_price_min',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Макс. цена ',
+                    field: 'final_price_max',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Медианная цена',
+                    field: 'price_median',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Выручка',
+                    field: 'revenue',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Выручка на товаро',
+                    field: 'product_revenue',
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+            ]
+            option['rowData'] = [
+                {% if sales is defined %}
+                {% for sale in sales %}
+                {
+                    word: '{{sale.word}}',
+                    count: '{{ sale.count??'' }}',
+                    results: '{{ sale.results??'' }}',
+                    sales: '{{ sale.sales??'' }} шт',
+                    items: '{{ sale.items??'' }}',
+                    items_with_sells: '{{ sale.items_with_sells??'' }}',
+                    items_with_sells_percent: '{{ sale.items_with_sells_percent??'' }} %',
+                    sellers: '{{ sale.sellers??'' }}',
+                    sellers_with_sells: '{{ sale.sellers_with_sells??'' }}',
+                    sellers_with_sells_percent: '{{ sale.sellers_with_sells_percent??'' }} %',
+                    brands: '{{ sale.brands??'' }}',
+                    brands_with_sells: '{{ sale.brands_with_sells??'' }}',
+                    brands_with_sells_percent: '{{ sale.brands_with_sells_percent??'' }} %',
+                    final_price_min: '{{ sale.final_price_min??'' }} ₽',
+                    final_price_max: '{{ sale.final_price_max??'' }} ₽',
+                    price_median: '{{ sale.price_median??'' }} ₽',
+                    revenue: '{{ sale.revenue??'' }} ₽ ',
+                    product_revenue: '{{ sale.product_revenue??'' }} ₽/шт'
+                },
+                {% endfor %}
+                {% endif %}
+            ]
+            new agGrid.Grid(document.getElementsByClassName("ag-theme-material")[0], option)
+        })
+
+        function advancedSearch(el) {
+            if (el.name === "adv_search") {
+                el.name = "search"
+                document.getElementById("adv_search").innerHTML = `
+    <div data-v-2cb18cd6="" class="row">
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-1">
+            <div data-v-2cb18cd6="" class="w170 mr-3">
+                <span data-v-2cb18cd6="">Частота</span>
+                <span data-v-2cb18cd6="" title="Частотность запроса по OZON">
+                <svg viewBox="0 0 16 16" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="countMin" value="{{ count_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="countMax" value="{{ count_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-2">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Результатов</span> <span
+                        data-v-2cb18cd6="" title="Кол-во результатов в выдаче"><svg data-v-2cb18cd6=""
+                                                                                    viewBox="0 0 16 16" width="1em"
+                                                                                    height="1em" focusable="false"
+                                                                                    role="img"
+                                                                                    aria-label="question circle"
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="currentColor"
+                                                                                    class="bi-question-circle b-icon bi"><g
+                                data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="resultsMin" value="{{ results_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="resultsMax" value="{{ results_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-3">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Продаж</span> <span data-v-2cb18cd6=""
+                                                                                                   title="Продано единиц товаров"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="salesMin" value="{{ sales_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="salesMax" value="{{ sales_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-1">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Товаров</span> <span data-v-2cb18cd6=""
+                                                                                                    title="Число товаров"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="itemsMin" value="{{ items_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="itemsMax" value="{{ items_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-2">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Товаров с продажами</span> <span
+                        data-v-2cb18cd6="" title="Число товаров с продажами больше 0"><svg data-v-2cb18cd6=""
+                                                                                           viewBox="0 0 16 16"
+                                                                                           width="1em" height="1em"
+                                                                                           focusable="false" role="img"
+                                                                                           aria-label="question circle"
+                                                                                           xmlns="http://www.w3.org/2000/svg"
+                                                                                           fill="currentColor"
+                                                                                           class="bi-question-circle b-icon bi"><g
+                                data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="items_with_sellsMin" value="{{ items_with_sells_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="items_with_sellsMax" value="{{ items_with_sells_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-1">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Продавцов</span> <span data-v-2cb18cd6=""
+                                                                                                      title="Кол-во продавцов"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="sellersMin" value="{{ sellers_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="sellersMax" value="{{ sellers_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-2">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Продавцов с продажами</span> <span
+                        data-v-2cb18cd6="" title="Число продавцов с продажами больше 0"><svg data-v-2cb18cd6=""
+                                                                                             viewBox="0 0 16 16"
+                                                                                             width="1em" height="1em"
+                                                                                             focusable="false"
+                                                                                             role="img"
+                                                                                             aria-label="question circle"
+                                                                                             xmlns="http://www.w3.org/2000/svg"
+                                                                                             fill="currentColor"
+                                                                                             class="bi-question-circle b-icon bi"><g
+                                data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="sellers_with_sellsMin" value="{{ sellers_with_sells_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="sellers_with_sellsMax" value="{{ sellers_with_sells_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-1">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Брендов</span> <span data-v-2cb18cd6=""
+                                                                                                    title="Кол-во брендов"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="brandsMin" value="{{ brands_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="brandsMax" value="{{ brands_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-2">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Брендов с продажами</span> <span
+                        data-v-2cb18cd6="" title="Число брендов с продажами больше 0"><svg data-v-2cb18cd6=""
+                                                                                           viewBox="0 0 16 16"
+                                                                                           width="1em" height="1em"
+                                                                                           focusable="false" role="img"
+                                                                                           aria-label="question circle"
+                                                                                           xmlns="http://www.w3.org/2000/svg"
+                                                                                           fill="currentColor"
+                                                                                           class="bi-question-circle b-icon bi"><g
+                                data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="brands_with_sellsMin" value="{{ brands_with_sells_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="brands_with_sellsMax" value="{{ brands_with_sells_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-1">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Мин. цена</span> <span data-v-2cb18cd6=""
+                                                                                                      title="Минимальная цена за период"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="final_price_minMin" value="{{ final_price_min_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="final_price_minMax" value="{{ final_price_min_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-2">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Макс. цена</span> <span
+                        data-v-2cb18cd6="" title="Максимальная цена за период"><svg data-v-2cb18cd6=""
+                                                                                    viewBox="0 0 16 16" width="1em"
+                                                                                    height="1em" focusable="false"
+                                                                                    role="img"
+                                                                                    aria-label="question circle"
+                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                    fill="currentColor"
+                                                                                    class="bi-question-circle b-icon bi"><g
+                                data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="final_price_maxMin" value="{{ final_price_max_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="final_price_maxMax" value="{{ final_price_max_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-1">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Ср. цена</span> <span data-v-2cb18cd6=""
+                                                                                                     title="Средняя цена за период"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="final_price_averageMin" value="{{ final_price_average_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="final_price_averageMax" value="{{ final_price_average_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-2">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Медианная цена</span> <span
+                        data-v-2cb18cd6="" title="Медианное значение цены"><svg data-v-2cb18cd6="" viewBox="0 0 16 16"
+                                                                                width="1em" height="1em"
+                                                                                focusable="false" role="img"
+                                                                                aria-label="question circle"
+                                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                                fill="currentColor"
+                                                                                class="bi-question-circle b-icon bi"><g
+                                data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="price_medianMin" value="{{ price_median_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="price_medianMax" value="{{ price_median_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-1">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Выручка</span> <span data-v-2cb18cd6=""
+                                                                                                    title="Выручка"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="revenueMin" value="{{ revenue_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="revenueMax" value="{{ revenue_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+        <div data-v-2cb18cd6="" class="d-flex align-items-center mt-4 p0-15 my-div-2">
+            <div data-v-2cb18cd6="" class="w170 mr-3"><span data-v-2cb18cd6="">Выручка на товар</span> <span
+                        data-v-2cb18cd6="" title="Сумма выручки, разделенная на число товаров с продажами"><svg
+                            data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                            aria-label="question circle" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                    d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                    d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+            </div>
+            <span data-v-2cb18cd6="" class="mr-3">от</span> <input name="product_revenueMin" value="{{ product_revenue_min??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                   class="w150 mr-3 form-control form-control-xs"> <span
+                    data-v-2cb18cd6="" class="mr-3">до</span> <input name="product_revenueMax" value="{{ product_revenue_max??'' }}" min="0" data-v-2cb18cd6="" placeholder="" type="tel"
+                                                                     class="w150 form-control form-control-xs"></div>
+    </div>`
+            } else {
+                el.name = "adv_search"
+                document.getElementById("adv_search").innerHTML = `<div data-v-2cb18cd6="" class="row">
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Частота не менее</span>
+                                                    <span data-v-2cb18cd6="" title="Частотность запроса по OZON"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                                focusable="false" role="img" aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="countMin" value="{{ count_min??'' }}" data-v-2cb18cd6="" type="number" min="0"
+                                                       class="w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Брендов не более</span> <span data-v-2cb18cd6=""
+                                                                                                             title="Кол-во брендов не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                                focusable="false" role="img" aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="brandsMax" value="{{ brands_max??'' }}" data-v-2cb18cd6="" type="number" min="0"
+                                                       class="w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span data-v-2cb18cd6="">Результатов не более</span>
+                                                    <span data-v-2cb18cd6="" title="Кол-во результатов в выдаче не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                                focusable="false" role="img" aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="resultsMax" value="{{ results_max??'' }}" data-v-2cb18cd6="" type="number" min="0"
+                                                       class="w150 form-control form-control-xs"></div>
+                                        </div>
+                                        <div data-v-2cb18cd6="" class="row">
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Продавцов не более</span> <span
+                                                            data-v-2cb18cd6="" title="Кол-во продавцов не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                                focusable="false" role="img" aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="sellersMax" value="{{ sellers_max??'' }}" data-v-2cb18cd6="" type="number" min="0"
+                                                       class="w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Товаров не более</span> <span data-v-2cb18cd6=""
+                                                                                                             title="Кол-во товаров не более"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                                focusable="false" role="img" aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="itemsMax" value="{{ items_max??'' }}" data-v-2cb18cd6="" type="number" min="0"
+                                                       class="w150 form-control form-control-xs"></div>
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left my-float-left-2">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Средняя цена от</span> <span data-v-2cb18cd6=""
+                                                                                                            title="Средняя цена"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                                focusable="false" role="img" aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="final_price_averageMin" value="{{ final_price_average_min??'' }}" data-v-2cb18cd6="" type="number"
+                                                       min="0"
+                                                       class="w150 form-control form-control-xs mr-5"> <span data-v-2cb18cd6=""
+                                                                                                             class="mr-5">до</span>
+                                                <input name="final_price_averageMax" value="{{ final_price_average_max??'' }}" data-v-2cb18cd6="" type="number"
+                                                       min="0"
+                                                       class="w150 form-control form-control-xs"></div>
+                                        </div>
+                                        <div data-v-2cb18cd6="" class="row">
+                                            <div data-v-2cb18cd6=""
+                                                 class="d-flex align-items-center mt-4 col-sm-12 my-float-left">
+                                                <div data-v-2cb18cd6="" class="w170"><span
+                                                            data-v-2cb18cd6="">Выручка не менее</span> <span data-v-2cb18cd6=""
+                                                                                                             title="Выручка не менее"><svg
+                                                                data-v-2cb18cd6="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                                focusable="false" role="img" aria-label="question circle"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                                class="bi-question-circle b-icon bi"><g data-v-2cb18cd6=""><path
+                                                                        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                                                        d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"></path></g></svg></span>
+                                                </div>
+                                                <input name="revenueMin" value="{{ revenue_min??'' }}" data-v-2cb18cd6="" type="number" min="0"
+                                                       class="w150 form-control form-control-xs"></div>
+                                        </div>`
+            }
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{%block styles%}
+
+    <link href="styles/auth.css" rel="stylesheet">
+{%endblock%}
+
+{% block body %}
+    <form method="post">
+        <p style="text-align:center;"></p>
+        {% if ipAddr ?? false%}
+            <div class="error">Превышен лимит устройств</div>
+        {% endif %}
+        {% if deactivated ?? false %}
+            <div class="error">User error</div>
+        {% endif %}
+        {% if error ?? false %}
+            <div class="error">username/password error</div>
+        {% endif %}
+        <label for="inputUsername">
+            <input type="text" value="" placeholder="username" name="username"
+                   id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+        </label>
+        <label for="inputPassword">
+            <input type="password" placeholder="password" name="password" id="inputPassword" class="form-control"
+                   autocomplete="current-password" required>
+        </label>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+        
+
+        
+        
+
+        <input class="submit" type="submit" value="Login"/>
+    </form>
+        <script>
+        if({{ logout ?? "false"}}){
+            fetch('/logout')
+        }
+    </script>
+{% endblock %}

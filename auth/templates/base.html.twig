@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+
+    {% block styles %}{% endblock %}
+    {% block script %}{% endblock %}
+</head>
+<body>
+{% block header %}
+    <header>
+        <nav>
+            <ul>
+                {% block logout %}{% endblock %}
+            </ul>
+        </nav>
+    </header>
+{% endblock %}
+{% block body %}{% endblock %}
+</body>
+</html>

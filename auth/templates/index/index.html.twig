@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    {% block linkStyles %}
+        <link href="styles/index/styles.css" rel="stylesheet">
+        <link href="styles/index/vendor.css" rel="stylesheet">
+    {% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://unpkg.com/ag-grid-enterprise@28.0.0/dist/ag-grid-enterprise.min.js"></script>
+</head>
+<body>
+<div class="be-wrapper be-nosidebar-left">
+    {% block header %}
+        <nav id="mp-stats-header" class="top-menu navbar navbar-expand-xl be-top-header fixed-top shadow-sm">
+            <div class="logo d-none d-xl-flex"><a href="/" class="d-flex align-items-center">
+                    <img src="https://mpstats.io/i/logo.svg" alt="mpstats"
+                         class="mr-0 mr-xxl-2"><span
+                            class="d-none d-xxl-inline">mpstats.io</span>
+                </a></div>
+            <button onclick="showMenu()" type="button" data-toggle="collapse" data-target="#be-navbar-collapse"
+                    aria-controls="be-navbar-collapse"
+                    aria-expanded="false" class="navbar-toggler text-left py-3 px-2"><i class="fas fa-bars"></i> Меню
+            </button>
+            <div id="be-navbar-collapse" class="navbar-collapse collapse">
+                <ul class="navbar-nav w-100">
+                    <li class="nav-item dropdown" onclick="dropdown(this)"><a data-toggle="dropdown"
+                                                                              role="button"
+                                                                              aria-expanded="false"
+                                                                              class="nav-link">
+                            Кабинет WB &#9660</a>
+                        <div role="menu" style="display:none;" class="dropdown-menu show "><a href="/cabinet/summary"
+                                                                                              class="dropdown-item"><span>Сводка</span></a>
+                            <a
+                                    href="/cabinet/sales" class="dropdown-item"><span>Продажи и заказы</span></a> <a
+                                    href="/cabinet/products" class="dropdown-item"><span>Товары</span></a> <a
+                                    href="/cabinet/warehouses"
+                                    class="dropdown-item"><span>Раскладка по складам</span></a>
+                            <a
+                                    href="/cabinet/order-region"
+                                    class="dropdown-item"><span>География заказов</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/cabinet/import/cost-price" class="dropdown-item"><span>Импорт себестоимости и параметров товара</span></a>
+                            <a href="/cabinet/compare" class="dropdown-item"><span>Сравнение периодов</span></a> <a
+                                    href="/cabinet/income-calc"
+                                    class="dropdown-item d-flex justify-content-between"><span>Расчет поставки</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/cabinet/weekly-reports" class="dropdown-item"><span>Еженедельные отчеты</span></a>
+                            <a
+                                    href="/cabinet/connect" class="dropdown-item"><span>Подключения</span></a></div>
+                    </li>
+                    <li class="nav-item dropdown seo-dropdown" onclick="dropdown(this)"><a
+                                data-toggle="dropdown"
+                                role="button"
+                                aria-expanded="false"
+                                class="nav-link">
+                            SEO &#9660;</a>
+                        <div role="menu" style="display:none;" class="dropdown-menu show"><a href="/seo/keyword"
+                                                                                             class="dropdown-item keyword-dashboard"><span>Результаты поиска (SERP)</span></a>
+                            <a href="/seo/keywords/expanding"
+                               class="dropdown-item keywords-expanding"><span>Расширение запросов</span></a> <a
+                                    href="/seo/keywords/selection" class="dropdown-item keywords-selection"><span>Подбор запросов</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/seo/position-tracking"
+                               class="dropdown-item position-tracking"><span>Мониторинг позиций</span></a> <a
+                                    href="/seo/tools/wb-card-checker" class="dropdown-item wb-card-checker"><span>Проверка карточки товара</span></a>
+                            <a href="/seo/tools/wb-sku-compare"
+                               class="dropdown-item wb-sku-compare"><span>Сравнение групп SKU</span></a></div>
+                    </li>
+                    <li class="nav-item dropdown" onclick="dropdown(this)"><a data-toggle="dropdown"
+                                                                              role="button"
+                                                                              aria-expanded="false"
+                                                                              class="nav-link">
+                            Ozon &#9660;</a>
+                        <div role="menu" style="display:none;" class="dropdown-menu show"><a href="/ozon/category?url="
+                                                                                             class="dropdown-item"><span>Категории</span></a>
+                            <a href="/ozon/seller" class="dropdown-item"><span>Продавцы</span></a> <a href="/ozon/brand"
+                                                                                                      class="dropdown-item"><span>Бренды</span></a>
+                            <a href="/ozon/search" class="dropdown-item"><span>Поиск по SKU</span></a></div>
+                    </li>
+                    <li class="nav-item dropdown" onclick="dropdown(this)"><a data-toggle="dropdown"
+                                                                              role="button"
+                                                                              aria-expanded="false"
+                                                                              class="nav-link">
+                            Wildberries &#9660;</a>
+                        <div role="menu" style="display:none;" class="dropdown-menu show"><a href="/wb/category?url="
+                                                                                             class="dropdown-item"><span>Категории</span></a>
+                            <a
+                                    href="/wb/seller" class="dropdown-item"><span>Продавцы</span></a> <a
+                                    href="/wb/brand"
+                                    class="dropdown-item"><span>Бренды</span></a>
+                            <a href="/wb/similar" class="dropdown-item"><span>Похожие товары</span></a> <a
+                                    href="/wb/search"
+                                    class="dropdown-item"><span>Поиск по SKU</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/wb/top-brands" class="dropdown-item"><span>Рейтинг брендов</span></a> <a
+                                    href="/wb/top-sellers" class="dropdown-item"><span>Рейтинг поставщиков</span></a>
+                        </div>
+                    </li>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li class="nav-item dropdown"><a href="{{ path('admin') }}" data-toggle="dropdown" role="button"
+                                                         aria-expanded="false" class="nav-link">Админ
+                                панель</a>
+                            <div role="menu" style="display:none;" class="dropdown-menu show">
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="be-right-navbar d-flex align-items-center">
+                <div class="search-container">
+                    <div class="input-group input-group-sm"><input type="text"
+                                                                   name="search"
+                                                                   placeholder="Поиск по товарам..."
+                                                                   value=""
+                                                                   id="searchItem"
+                                                                   class="col-8 form-control search-input">
+                        <input type="hidden" name="section" value="main"> <input onclick="searchItem()" type="button"
+                                                                                 value="Поиск"
+                                                                                 class="col-3 btn btn-primary"></div>
+                </div>
+                <ul class="nav navbar-nav float-right be-user-nav">
+                    <li class="nav-item dropdown" onclick="dropdown(this)"><a data-toggle="dropdown"
+                                                                              role="button"
+                                                                              aria-expanded="false"
+                                                                              class="nav-link"><img
+                                    src="https://mpstats.io/i/avatar.png" alt="" width="32"
+                                    height="32"></a>
+                        <div role="menu" style="display:none;" class="dropdown-menu show profile-menu">
+                            <a href="/logout" class="dropdown-item"><i class="fas fa-sign-out-alt mr-2"></i>Выход
+                            </a></div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <script>
+            function dropdown(element) {
+                let drop = document.getElementsByClassName("dropdown")
+                let index = -1
+                for (let i = 0; i < drop.length; i++) {
+                    drop[i].classList.remove("show")
+                    if (drop[i] === element) {
+                        index = i
+                    }
+                }
+                let menus = document.getElementsByClassName("dropdown-menu")
+                for (let i = 0; i < menus.length; i++) {
+                    if (index !== i) {
+                        menus[i].style.display = "none";
+                    }
+                }
+                let menu = menus[index]
+                if (menu.style.display === "block") {
+                    element.classList.remove("show")
+                    menu.style.display = "none";
+                } else {
+                    element.classList.add("show")
+                    menu.style.display = "block";
+                }
+            }
+            {% if tokens is defined %}
+
+            function allKeys() {
+                let buttonAllkey = document.getElementById("__BVID__11");
+                if (buttonAllkey !== undefined) {
+                    let display = buttonAllkey.children[buttonAllkey.children.length - 1].style.display
+                    display = display === "block" ? "none" : "block"
+                    buttonAllkey.children[buttonAllkey.children.length - 1].style.display = display;
+                    document.getElementById('__BVID__11__BV_toggle_').style.visibility = display === "block" ? "hidden" : "visible";
+                }
+            }
+            function allSelectKeys() {
+                let buttonAllkey = document.getElementById("__BVID__11");
+                let select = buttonAllkey.children[buttonAllkey.children.length - 1]
+                select = select.children[select.children.length - 2]
+                for (let i=0;i<select.children.length;i++){
+                    select.children[i].selected = true
+                }
+            }
+
+            function selectKey(id, url) {
+                window.location.href = url + "?index=" + id;
+            }
+
+            function applyToken(url){
+                let buttonAllkey = document.getElementById("__BVID__11");
+                let select = buttonAllkey.children[buttonAllkey.children.length - 1], ids = [], j=0
+                select = select.children[select.children.length - 2]
+                for (let i=0;i<select.children.length;i++){
+                    if(select.children[i].selected){
+                        ids[j] = select.children[i].value
+                        j++
+                    }
+                }
+                window.location.href = url + "?ids=" + ids;
+            }
+            {% endif %}
+        </script>
+    {% endblock %}
+    {% block body %}
+        <div class="be-content">
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="card">
+                        <div class="card-header card-header-divider">MPSTATS 2.0<span
+                                    class="card-subtitle">mpstats 2.0</span>
+                        </div>
+                        <div class="card-body"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
+                                sodales pharetra lorem varius accumsan. Donec fringilla sapien nec luctus faucibus. Cras
+                                dignissim massa eget eleifend placerat. Sed ex urna, feugiat sed euismod sit amet,
+                                aliquam finibus odio. Vestibulum ac mi et erat sodales hendrerit et pulvinar arcu. Morbi
+                                dignissim gravida nisl, et placerat leo cursus id. Etiam non nibh sed mi semper
+                                pellentesque. Morbi id mollis mi, sed commodo leo. Proin fringilla felis id iaculis
+                                pellentesque. Vestibulum vitae sem vel felis ultrices dignissim. Vestibulum ante ipsum
+                                primis in faucibus orci luctus et ultrices posuere cubilia curae; Proin porttitor
+                                eleifend pulvinar. Aliquam iaculis, dolor et egestas aliquam, massa magna cursus erat,
+                                ac mollis nunc tellus in nibh. Nullam ante magna, aliquam id sollicitudin eget, sodales
+                                non felis.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div><!---->
+                <div class="snotify snotify-left_top"></div>
+                <div class="snotify snotify-left_center"></div>
+                <div class="snotify snotify-left_bottom"></div>
+                <div class="snotify snotify-right_top"></div>
+                <div class="snotify snotify-right_center"></div>
+                <div class="snotify snotify-right_bottom"></div>
+                <div class="snotify snotify-center_top"></div>
+                <div class="snotify snotify-center_center"></div>
+                <div class="snotify snotify-center_bottom"></div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block footer %}
+    <footer onclick="" class="be-footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="logo d-flex">
+                        <a href="/" class="d-flex align-items-center">
+                            <alt
+                            ="mpstats 2.0" class="mr-2"> mpstats 2.0
+                        </a>
+                    </div>
+                    <p class="mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales pharetra
+                        lorem varius accumsan.</p>
+                    </p>
+
+                </div>
+            </div>
+            </a>
+            </li>
+            </ul>
+        </div>
+</div>
+</div>
+</div>
+</div>
+</footer>
+{% endblock %}
+{% block customStyles %}
+    <style>
+        .dropdown_keys {
+            z-index: 11;
+            list-style-type: none;
+            position: relative;
+            background: white;
+            padding: 0;
+            overflow: overlay;
+            right: -2px;
+        }
+        .dropdown_keys option:before {
+            content: " ☐  ";
+        }
+        .dropdown_keys option:checked:before {
+            content: " ☑  ";
+        }
+        .scrollbar {
+            -webkit-appearance: none;
+            width: 100%;
+        }
+
+        .scrollbar :focus {
+            outline: none;
+        }
+
+        .scrollbar:focus {
+            outline: none;
+        }
+
+        .scrollbar::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            /*background: #87ddfd96;*/
+            border-radius: 1.3px;
+        }
+
+        .scrollbar::-webkit-slider-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            border: 1px solid #000000;
+            height: 15px;
+            width: 60px;
+            border-radius: 5px;
+            background: snow;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -5px;
+        }
+
+        .scrollbar::-moz-range-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            background: #3071a9;
+            border-radius: 1.3px;
+        }
+
+        .scrollbar::-moz-range-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            height: 36px;
+            width: 16px;
+            border-radius: 3px;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        .scrollbar::-ms-track {
+            width: 100%;
+            height: 8.4px;
+            cursor: pointer;
+            background: transparent;
+            border-color: transparent;
+            border-width: 16px 0;
+            color: transparent;
+        }
+
+        .scrollbar::-ms-fill-lower {
+            background: #2a6495;
+            border: 0.2px solid #010101;
+            border-radius: 2.6px;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        }
+
+        .scrollbar::-ms-fill-upper {
+            background: #3071a9;
+            border: 0.2px solid #010101;
+            border-radius: 2.6px;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        }
+
+        .scrollbar::-ms-thumb {
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            border: 1px solid #000000;
+            height: 36px;
+            width: 16px;
+            border-radius: 3px;
+            background: #ffffff;
+            cursor: pointer;
+        }
+
+        .scrollbar:focus::-ms-fill-lower {
+            background: #3071a9;
+        }
+
+        .scrollbar:focus::-ms-fill-upper {
+            background: #367ebd;
+        }
+
+        meter {
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+
+        .negative {
+            background: rgba(235, 87, 87, .05);
+            color: #eb5757;
+        }
+
+        .positive {
+            background: rgb(177 255 188 / 20%);
+            color: #33ae45 !important;
+        }
+
+        .ag-row:hover {
+            background: 0 0;
+            color: #4285f4;
+        }
+        .excel-btn{
+            position: relative;
+            top: -27px;
+            left: 16px;
+            color: #272727;
+            background-color: #fafafa;
+            padding: 0 6px;
+            font-size: 11px;
+            line-height: 18px;
+            border-radius: 1px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            border-color: #bababa;
+            color: rgb(39, 39, 39);
+
+            display: flex;
+            align-items: center;
+        }
+    </style>
+{% endblock %}
+
+</div>
+</div>
+</body>
+{% block scripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            formatter("number")
+        })
+
+        function drawDonutGraph(id, labels, data, title, vector = 'left') {
+            new Chart(document.getElementById(id).getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgb(255,0,54)',
+                            'rgb(54, 162, 235)',
+                            'rgb(157,55,34)',
+                            'rgb(255, 205, 86)',
+                            'rgb(86,151,155)',
+                            'rgb(102,0,255)',
+                            'rgb(197,197,197)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    legend: {
+                        position: vector,
+                    },
+                    title: {
+                        display: true,
+                        text: title
+                    }
+                },
+            })
+        }
+
+        function drawLineGraph(id, data, names, labels, groups = ['A', 'B', 'A', 'A', 'C', 'C', 'C', 'C', 'A', 'A']) {
+
+            let dataset = [],
+                BGcolor = [
+                    'rgba(109,99,255,0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(66,26,34,0.2)',
+                    'rgba(195,104,255,0.2)',
+                    'rgba(255,224,99,0.68)',
+                    'rgba(62,143,178,0.2)',
+                    'rgba(54,54,54,0.5)',
+                    'rgba(167,255,220,0.51)',
+                    'rgba(191,3,255,0.56)',
+                    'rgba(255,220,0,0.78)'
+                ],
+                BRcolor = [
+                    'rgb(99,143,255)',
+                    'rgba(255,99,132,1)',
+                    'rgb(121,99,102)',
+                    'rgb(169,99,255)',
+                    'rgb(255,200,99)',
+                    'rgb(94,200,224)',
+                    'rgb(0,0,0)',
+                    'rgb(149,255,235)',
+                    'rgb(198,99,255)',
+                    'rgb(255,253,31)'
+                ]
+            for (let i = 0; i < data.length; i++) {
+                dataset[i] = {
+                    label: names[i],
+                    backgroundColor: BGcolor[i],
+                    borderColor: BRcolor[i],
+                    borderWidth: 1,
+                    yAxisID: groups[i],
+                    data: data[i]
+                }
+            }
+            new Chart(document.getElementById(id).getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: dataset
+                },
+                options: {
+                    responsive: true,
+                    interaction: {
+                        intersect: false,
+                    },
+                    scales: {
+                        yAxes: [{id: 'A',}, {id: 'B',}, {id: 'C',}]
+                    }
+                },
+            })
+        }
+
+        function newDatePicker(id, func, format = "Y-m-d") {
+            document.getElementById(id).attributes.removeNamedItem('disabled')
+            flatpickr("#" + id, {
+                mode: "range",
+                dateFormat: format,
+                onClose: function (selectedDates, dateStr, instance) {
+                    func(dateStr)
+                },
+            })
+        }
+
+        function newLoader(id, dur = 300) {
+            return new jQuerySpinner({
+                parentId: id,
+                duration: dur
+            });
+        }
+
+        function mixChart(id, labels, names, data, lineData) {
+            let dataset = [],
+                groups = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'U'],
+                BGcolor = [
+                    'rgba(109,99,255,0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(66,26,34,0.2)',
+                    'rgba(195,104,255,0.2)',
+                    'rgba(255,224,99,0.68)',
+                    'rgba(62,143,178,0.2)',
+                    'rgba(54,54,54,0.5)',
+                    'rgba(167,255,220,0.51)',
+                    'rgba(191,3,255,0.56)',
+                    'rgba(255,220,0,0.78)'
+                ],
+                BRcolor = [
+                    'rgb(99,143,255)',
+                    'rgba(255,99,132,1)',
+                    'rgb(121,99,102)',
+                    'rgb(169,99,255)',
+                    'rgb(255,200,99)',
+                    'rgb(94,200,224)',
+                    'rgb(0,0,0)',
+                    'rgb(149,255,235)',
+                    'rgb(198,99,255)',
+                    'rgb(255,253,31)'
+                ];
+            for (let i = 0; i < data.length; i++) {
+                dataset[i] = {
+                    label: names[i],
+                    data: data[i],
+                    backgroundColor: BGcolor[i],
+                    borderColor: BRcolor[i],
+                    yAxisID: groups[i],
+                }
+            }
+            for (let i = 0, j = data.length; i < lineData.length; i++, j++) {
+                dataset[j] = {
+                    label: names[j],
+                    data: lineData[i],
+                    backgroundColor: BGcolor[j],
+                    borderColor: BRcolor[j],
+                    type: 'line',
+                    yAxisID: groups[j],
+                    tension: 0.1
+                }
+            }
+            new Chart(document.getElementById(id).getContext('2d'), {
+                type: 'bar',
+                data: {
+                    datasets: dataset,
+                    labels: labels
+                },
+                options: {
+                    scales: {
+                        yAxes: [{id: 'A',}, {id: 'B',}, {id: 'C',}, {id: 'D',}, {id: 'E',}, {id: 'F',}, {id: 'G',}, {id: 'U',}]
+                    }
+                },
+            });
+
+        }
+
+        function getOptions() {
+            return {
+                load:true,
+                rowHeight: 35,
+                pagination: true,
+                defaultColDef: {
+                    sortable: true,
+                    filter: 'agTextColumnFilter',
+                    floatingFilter: true,
+                    resizable: true,
+                    filterParams: {
+                        buttons: ['reset', 'apply'],
+                        debounceMs: 200
+                    },
+                    enableValue: true,
+                    enableRowGroup: true,
+                    enablePivot: true,
+                    overlayLoadingTemplate:
+                        '<span class="ag-overlay-loading-center"><div class="loader"><svg><circlecx="50"cy="50"r="40"stroke="#418200"stroke-dasharray="78.5 235.5"stroke-width="3"fill="/><circlecx="50"cy="50"r="30"stroke=" green"stroke-dasharray="62.8 188.8"stroke-width="3"fill="none"/><circlecx="50"cy="50"r="20"stroke="#81C700"stroke-dasharray="47.1 141.3"stroke-width="3"fill="none"/></svg></div></span> ',
+                },
+                sideBar: {
+                    toolPanels: [
+                        {
+                            id: "columns",
+                            labelDefault: "Columns",
+                            labelKey: "columns",
+                            iconKey: "columns",
+                            toolPanel: "agColumnsToolPanel",
+                            minWidth: 225,
+                            maxWidth: 225,
+                            width: 225,
+                        },
+                        {
+                            id: "filters",
+                            labelDefault: "Filters",
+                            labelKey: "filters",
+                            iconKey: "filter",
+                            toolPanel: "agFiltersToolPanel",
+                            minWidth: 180,
+                            maxWidth: 400,
+                            width: 250,
+                        },
+                    ],
+                    position: "right",
+                },
+                suppressContextMenu: true,
+                localeText: this.getLocale(),
+                onGridReady: params => {formatter("number")},
+                onBodyScroll: params => {formatter("number")}
+            }
+        }
+
+        function getLocale() {
+            return {
+                // for filter panel
+                page: "Страница",
+                more: "ещё",
+                to: "к",
+                of: "из",
+                next: "Следующая",
+                last: "Последняя",
+                first: "Первая",
+                previous: "Предыдущая",
+                loadingOoo: "Загрузка...",
+
+                // for set filter
+                selectAll: "Выделить всё",
+                searchOoo: "Поиск...",
+                blanks: "Ничего не найдено",
+
+                // for number filter and text filter
+                filterOoo: "Фильтровать...",
+                applyFilter: "Применить фильтр...",
+                resetFilter: "Сброс",
+                equals: "Равно",
+                notEqual: "Не равно",
+
+                // for number filter
+                lessThan: "Меньше чем",
+                greaterThan: "Больше чем",
+                lessThanOrEqual: "Меньше или равно",
+                greaterThanOrEqual: "Больше или равно",
+                inRange: "В промежутке",
+
+                // for text filter
+                contains: "Содержит",
+                notContains: "Не содержит",
+                startsWith: "Начинается с",
+                endsWith: "Заканчивается",
+
+                // filter conditions
+                andCondition: '"И"',
+                orCondition: '"ИЛИ"',
+
+                // the header of the default group column
+                group: "Группа",
+
+                // tool panel
+                columns: "Столбцы",
+                filters: "Фильтры",
+                rowGroupColumns: "Столбцы группировки по строкам",
+                rowGroupColumnsEmptyMessage: "Перетащите сюда для группировки по строкам",
+                valueColumns: "Столбцы со значениями",
+                pivotMode: "Режим сводной таблицы",
+                groups: "Группы",
+                values: "Значения",
+                pivots: "Заголовки столбцов",
+                valueColumnsEmptyMessage: "Перетащите сюда для агрегации",
+                pivotColumnsEmptyMessage: "Перетащите сюда, чтобы задать заголовки столбам",
+                toolPanelButton: "Панель инструментов",
+
+                // other
+                noRowsToShow: "Нет данных",
+
+                // enterprise menu
+                pinColumn: "Закрепить колонку",
+                valueAggregation: "Агрегация по значению",
+                autosizeThiscolumn: "Автоматически задавать размер этой колонки",
+                autosizeAllColumns: "Автоматически задавать размер всем колонкам",
+                groupBy: "Группировать по",
+                ungroupBy: "Разгруппировать по",
+                resetColumns: "Сбросить столбцы",
+                expandAll: "Развернуть всё",
+                collapseAll: "Свернуть всё",
+                toolPanel: "Панель инструментов",
+                export: "Экспорт",
+                csvExport: "Экспорт в CSV",
+                excelExport: "Экспорт в Excel (.xlsx)",
+                excelXmlExport: "Экспорт в XML (.xml)",
+
+                // enterprise menu pinning
+                pinLeft: "Закрепить слева <<",
+                pinRight: "Закрепить справа >>",
+                noPin: "Не закреплять <>",
+
+                // enterprise menu aggregation and status bar
+                sum: "Сумма",
+                min: "Минимум",
+                max: "Максимум",
+                none: "Пусто",
+                count: "Количество",
+                average: "Среднее значение",
+                filteredRows: "Отфильтрованные",
+                selectedRows: "Выделенные",
+                totalRows: "Всего строк",
+                totalAndFilteredRows: "Строк",
+
+                // standard menu
+                copy: "Копировать",
+                copyWithHeaders: "Копировать с заголовком",
+                ctrlC: "Ctrl+C",
+                paste: "Вставить",
+                ctrlV: "Ctrl+V",
+            };
+        }
+
+        function formatter(id) {
+            let intFormatter = new Intl.NumberFormat()
+            for (let i = 0; i < document.getElementsByClassName(id).length; i++) {
+                let prop = document.getElementsByClassName(id)[i]
+                let str = prop.innerText
+                let str2 = str.replace(/[%₽шт/]/gi, "")
+                if (Number.isInteger(tryParseInt(str2))) {
+                    prop.innerText = intFormatter.format(tryParseInt(str2)) + " " +str.substring(str2.length)
+                }
+            }
+        }
+
+        function getIndexClass(strClass, element){
+            let classes = document.getElementsByClassName(strClass)
+            for (let i=0;i<classes.length;i++){
+                if(classes[i]===element){
+                    return i
+                }
+            }
+            return -1
+        }
+
+        function tryParseInt(str,defaultValue) {
+            var retValue = defaultValue;
+            if(str !== null) {
+                if(str.length > 0) {
+                    if (!isNaN(str)) {
+                        retValue = parseInt(str);
+                    }
+                }
+            }
+            return retValue;
+        }
+
+        function searchItem() {
+            let value = document.getElementById("searchItem").value;
+            if (value.length > 0) {
+                fetch(`{{ path("api_search_item") }}?sku=${value}`)
+                    .then(async data => {
+                        data = await data.json()
+                        let isWb = data['isWb'], values = data['value']
+                        if (isWb) {
+                            let path = `{{ path('wb_item', {sku:0}) }}`
+                            window.location.href = path.substring(0, path.length - 1) + "" + values
+                        } else if (!isWb && isWb !== undefined) {
+                            let path = `{{ path('ozon_get_item', {sku:0}) }}`
+                            window.location.href = path.substring(0, path.length - 1) + "" + values
+                        }
+                    })
+            }
+        }
+
+        function showMenu() {
+            if (document.getElementById("be-navbar-collapse").classList.contains('show')) {
+                document.getElementById("be-navbar-collapse").classList.remove('show')
+            } else {
+                document.getElementById("be-navbar-collapse").classList.add('show')
+            }
+        }
+    </script>
+{% endblock %}
+</html>

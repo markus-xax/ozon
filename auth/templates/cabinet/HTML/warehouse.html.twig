@@ -1,0 +1,102 @@
+<div>
+    <div class="card">
+        <div class="card-header d-sm-flex justify-content-between align-items-start">
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav page-header pl-0 mb-0">
+                    <li class="breadcrumb-item"><a href="/cabinet/summary">Сводка</a></li>
+                    <li class="breadcrumb-item">Раскладка по складам</li>
+                </ol>
+            </nav>
+            <div class="d-flex flex-column flex-lg-row justify-content-between justify-content-lg-start align-items-lg-center">
+                <div class="btn-group d-flex flex-column flex-lg-block flex-lg-row">
+                    <div class="api-key-selector d-flex align-items-start align-items-xxl-center">
+                        <div class="mr-2" style="display: none;"></div>
+                        <div class="dropdown b-dropdown btn-group" id="__BVID__11"><!---->
+                            <button aria-haspopup="true" onclick="allKeys()" aria-expanded="false" type="button" class="btn btn-secondary" id="__BVID__11__BV_toggle_">
+                                <span>Все ключи API</span>
+                            </button>
+                            <div style="display: none;position: absolute; height: 160px; right: -20px; z-index: 22; width: 150px; background: #e5e5e5; border-radius: 2px;">
+                                <button style="width: inherit;" aria-haspopup="true" onclick="allKeys()" aria-expanded="false" type="button" class="btn btn-secondary">
+                                    <span>Все ключи API</span>
+                                </button>
+                                <select style="box-shadow: 0px 0px 4px 0px black;top: 5px;border: none;" multiple="multiple" class="dropdown_keys">
+                                    <option value="all" onclick="allSelectKeys()">Все ключи API</option>
+                                    {% for token in allTokens %}
+                                        <option value="{{token.id}}">
+                                            {% if token.name|length > 9 %}
+                                                {{ token.name|slice(0, 9) }}...
+                                            {% else %}
+                                                {{token.name}}
+                                            {% endif %}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                <button style="top: 5px; z-index: 12;left: 0px;width: inherit;" onclick="applyToken('{{path("warehouse")}}')" class="dropdown_keys btn btn-secondary" >
+                                    <span>Применить</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="w35">
+                <div groupdisplaytype="singleColumn" class="ag-theme-balham">
+                </div>
+                <button class="excel-btn" onclick="option.api.exportDataAsExcel()">
+                    Экспорт
+                    <svg
+                            viewBox="0 0 16 16"
+                            width="1em"
+                            height="1em"
+                            focusable="false"
+                            role="img"
+                            aria-label="file earmark excel"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            class="bi-file-earmark-excel b-icon bi"
+                    >
+                        <g>
+                            <path
+                                    d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"
+                            ></path>
+                            <path
+                                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"
+                            ></path>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-center mb-1">
+                        <div class="row-bg-info mr-1" style="background: cornsilk;"></div>
+                        - строки с товарами где по данным API есть товары на складах, но нет в данных с сайта
+                    </div>
+                    <div class="d-flex align-items-center mb-1">
+                        <div class="row-bg-info mr-1" style="background: rgb(220, 220, 220);"></div>
+                        - исключенные товары
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="row-bg-info ag-grid-editable-cell mr-1"></div>
+                        - редактируемые поля. Значение будет сохранено в базу данных
+                    </div>
+                </div>
+                <div data-v-08387b56="" class="d-inline-block text-left switcher-xs">
+                    <div data-v-08387b56="" class="switcher-button-wrapper">
+                        <div data-v-08387b56=""
+                             class="switch-button mr-1 switch-button-xs switcher-on-off disabled"><input
+                                    data-v-08387b56="" type="checkbox" name="switcher-element-6837"
+                                    id="switcher-element-6837" disabled="disabled"> <span data-v-08387b56=""><label
+                                        data-v-08387b56="" for="switcher-element-6837"></label></span></div>
+                        <span data-v-08387b56="" class="switcher-text text-muted">
+                Показать выведенные из номенклатуры
+                (<span data-v-08387b56="">0</span> шт
+                <i data-v-08387b56="" class="fas fa-info-circle text-muted ml-1"></i>)
+            </span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

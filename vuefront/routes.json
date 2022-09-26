@@ -1,0 +1,14 @@
+{
+  "/seo/api/position-tracking/userlimits": "/LIMITS",
+  "/seo/api/position-tracking/projectslist": "/PROJECTS",
+  "/seo/api/position-tracking/project": "/PROJECTS",
+  "/seo/api/position-tracking/project/:id": "/PROJECTS/:id",
+  "/seo/api/position-tracking/project/:id/skus": "/PROJECTS/:id/skus",
+  "/seo/api/position-tracking/project/:id/skudata": "/SKUDATA/:id",
+  "/seo/api/skuinfo/:id": "/SKUINFO/:id",
+  "/seo/api/skuinfo": "/SKUINFO",
+  "/seo/api/skuwords/:sku": "/SKUWORDS/:sku",
+  "/seo/api/skuwords": "/SKUWORDS",
+  "/seo/api/project/:id/addSku": "/SEOPROJECTS/:id/skus",
+  "/seo/api/position-tracking/movesku": "/SEOPROJECTS"
+}

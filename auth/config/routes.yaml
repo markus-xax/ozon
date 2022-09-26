@@ -1,0 +1,24 @@
+index:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+controller:
+    resource: '../src/Controller'
+    type:     annotation
+    trailing_slash_on_root: false
+
+api:
+    resource: '../src/Controller/Api/V1'
+    type:     annotation
+    prefix:   /api/v1
+    trailing_slash_on_root: false
+
+app.swagger_ui:
+    path: /{area}/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui, area: default}
+
+app.swagger:
+    path: /{area}/doc.json
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger, area: default}

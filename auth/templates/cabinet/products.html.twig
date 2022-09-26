@@ -1,0 +1,183 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../styles/index/styles.css" rel="stylesheet">
+    <link href="../styles/index/vendor.css" rel="stylesheet">
+    <link href="../styles/summary/summary.css" rel="stylesheet">
+    <link href="../styles/summary/table.css" rel="stylesheet">
+    <link href="../styles/summary/table2.css" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    {% if tokens %}
+        {% if processing is defined %}
+            <div class="be-content">
+                <div id="mp-stats-app" class="main-content container-fluid">
+                    <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+                        <div class="ag-overlay-panel">
+                            <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                                <div class="mp-loader-static"></div>
+                            </div>
+                        </div>
+                    </div> <!---->
+                    <div>
+                        <div class="card">
+                            <div class="card-header d-md-flex justify-content-between align-items-start pb-3 pt-3">
+                                <div class="d-flex flex-column flex-lg-row justify-content-between justify-content-lg-start align-items-lg-center">
+                                    <div class="d-flex flex-column flex-lg-block flex-lg-row">
+                                        <div class="d-block-inline dropdown-period mr-3">
+                                            <div class="btn-group d-flex flex-column flex-lg-block flex-lg-row">
+                                                Происходит обработка, пожалуйста повторите позже
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {% include 'cabinet/HTML/products.html.twig' %}
+        {% endif %}
+    {% else %}
+        <div id="mp-stats-app" class="main-content container-fluid">
+            <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+                <div class="ag-overlay-panel">
+                    <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                        <div class="mp-loader-static"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card card-border-color card-border-color-warning col-12 py-5">
+                    <div class="card-body py-4"><p class="lead text-center">Для работы с разделами личного кабинета
+                            необходимо добавить ключи API</p>
+                        <div class="d-flex justify-content-center"><a href="/cabinet/connect" class="btn btn-success">Добавить</a>
+                        </div>
+                    </div>
+                </div>
+            </div> <!---->
+            <div><!---->
+                <div class="snotify snotify-left_top"></div>
+                <div class="snotify snotify-left_center"></div>
+                <div class="snotify snotify-left_bottom"></div>
+                <div class="snotify snotify-right_top"></div>
+                <div class="snotify snotify-right_center"></div>
+                <div class="snotify snotify-right_bottom"></div>
+                <div class="snotify snotify-center_top"></div>
+                <div class="snotify snotify-center_center"></div>
+                <div class="snotify snotify-center_bottom"></div>
+            </div>
+        </div>
+    {% endif %}
+    <script>
+        let option = {}
+        document.addEventListener("DOMContentLoaded", () => {
+            option = {...getOptions()}
+            option['columnDefs'] = [
+                {
+                    headerName: 'Товар',
+                    pinned: 'left',
+                    children: [
+                        {
+                            headerName: 'Фото',
+                            field: 'img',
+                            maxWidth: 80,
+                            pinned: 'left',
+                            filter: false,
+                            sortable: false,
+                            cellRenderer: params => `<img style="height: 32px; width: 32px" src="${params.value}" />`
+                        },
+                        {
+                            headerName: 'Название',
+                            field: 'subject',
+                            pinned: 'left',
+                        }
+                    ]
+                },
+                {
+                    headerName: 'Товар',
+                    children: [
+                        {
+                            headerName: 'SKU',
+                            maxWidth: 130,
+                            field: 'nmId',
+                            cellRenderer: params => `<a href="https://www.wildberries.ru/catalog/${params.value}/detail.aspx">${params.value}</a>`
+                        },
+                        {
+                            headerName: 'Комиссия за ед. (руб)',
+                            maxWidth: 200,
+                            field: 'undefined1'
+                        },
+                        {
+                            headerName: 'Комиссия за ед. (%)',
+                            maxWidth: 200,
+                            field: 'undefined2'
+                        },
+                        {
+                            headerName: 'Дней на сайте',
+                            maxWidth: 200,
+                            field: 'daysOnSite'
+                        },
+                        {
+                            headerName: 'Рейтинг',
+                            maxWidth: 130,
+                            field: 'undefined3'
+                        },
+                        {
+                            headerName: 'Бренд',
+                            field: 'brand',
+                        },
+                        {
+                            headerName: 'Категория',
+                            field: 'category',
+                        },
+                        {
+                            headerName: 'Артикул',
+                            field: 'barcode',
+                        },
+                        {
+                            headerName: 'Размер',
+                            field: 'techSize',
+                            maxWidth: 130
+                        },
+                        {
+                            headerName: 'Дней в наличии',
+                            field: 'daysOnSite2',
+                        },
+                    ]
+                },
+            ]
+            option['rowData'] = [
+                {% for product in products %}
+                {
+                    img: '{{ product.img }}',
+                    subject: '{{ product.subject }}',
+                    nmId: '{{ product.nmId }}',
+                    undefined1: '149,12',
+                    undefined2: '5,39 %',
+                    daysOnSite: '{{ product.daysOnSite }}',
+                    undefined3: 5,
+                    brand: '{{ product.brand }}',
+                    category: '{{ product.category }}',
+                    barcode: '{{ product.barcode }}',
+                    techSize: '{{ product.techSize }}',
+                    daysOnSite2: '{{ product.daysOnSite }}',
+                },
+                {% endfor %}
+            ]
+            newDatePicker('date', function () {}, "d.m.Y")
+            new agGrid.Grid(document.getElementsByClassName("ag-theme-balham")[0], option)
+            let buttonAllkey = document.getElementById("__BVID__11");
+            let select = buttonAllkey.children[buttonAllkey.children.length - 1]
+            select = select.children[select.children.length - 2]
+            let tokens = [{% for token in tokens ?? [] %} {{token.id}}, {% endfor%}]
+            for(let i=0;i<select.children.length;i++){
+                for(let j=0;j<tokens.length;j++){
+                    if(tokens[j] === tryParseInt(select.children[i].value)){
+                        select.children[i].selected = true
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

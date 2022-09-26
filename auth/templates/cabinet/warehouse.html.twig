@@ -1,0 +1,188 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../styles/index/styles.css" rel="stylesheet">
+    <link href="../styles/index/vendor.css" rel="stylesheet">
+    <link href="../styles/summary/summary.css" rel="stylesheet">
+    <link href="../styles/summary/table.css" rel="stylesheet">
+    <link href="../styles/summary/table2.css" rel="stylesheet">
+
+{% endblock %}
+{% block body %}
+    {% if tokens %}
+        {% if processing is defined %}
+            <div class="be-content">
+                <div id="mp-stats-app" class="main-content container-fluid">
+                    <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+                        <div class="ag-overlay-panel">
+                            <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                                <div class="mp-loader-static"></div>
+                            </div>
+                        </div>
+                    </div> <!---->
+                    <div>
+                        <div class="card">
+                            <div class="card-header d-md-flex justify-content-between align-items-start pb-3 pt-3">
+                                <div class="d-flex flex-column flex-lg-row justify-content-between justify-content-lg-start align-items-lg-center">
+                                    <div class="d-flex flex-column flex-lg-block flex-lg-row">
+                                        <div class="d-block-inline dropdown-period mr-3">
+                                            <div class="btn-group d-flex flex-column flex-lg-block flex-lg-row">
+                                                Происходит обработка, пожалуйста повторите позже
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {% include 'cabinet/HTML/warehouse.html.twig' %}
+        {% endif %}
+    {% else %}
+        <div id="mp-stats-app" class="main-content container-fluid">
+            <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+                <div class="ag-overlay-panel">
+                    <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                        <div class="mp-loader-static"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card card-border-color card-border-color-warning col-12 py-5">
+                    <div class="card-body py-4"><p class="lead text-center">Для работы с разделами личного кабинета
+                            необходимо добавить ключи API</p>
+                        <div class="d-flex justify-content-center"><a href="/cabinet/connect" class="btn btn-success">Добавить</a>
+                        </div>
+                    </div>
+                </div>
+            </div> <!---->
+            <div><!---->
+                <div class="snotify snotify-left_top"></div>
+                <div class="snotify snotify-left_center"></div>
+                <div class="snotify snotify-left_bottom"></div>
+                <div class="snotify snotify-right_top"></div>
+                <div class="snotify snotify-right_center"></div>
+                <div class="snotify snotify-right_bottom"></div>
+                <div class="snotify snotify-center_top"></div>
+                <div class="snotify snotify-center_center"></div>
+                <div class="snotify snotify-center_bottom"></div>
+            </div>
+        </div>
+    {% endif %}
+    <script>
+        let option = {}
+        document.addEventListener("DOMContentLoaded", () => {
+            let buttonAllkey = document.getElementById("__BVID__11");
+            let select = buttonAllkey.children[buttonAllkey.children.length - 1]
+            select = select.children[select.children.length - 2]
+            let tokens = [{% for token in tokens ?? [] %} {{ token.id }}, {% endfor %}]
+            for (let i = 0; i < select.children.length; i++) {
+                for (let j = 0; j < tokens.length; j++) {
+                    if (tokens[j] === tryParseInt(select.children[i].value)) {
+                        select.children[i].selected = true
+                    }
+                }
+            }
+            option = {...getOptions()}
+            option['columnDefs'] = [
+                {
+                    headerName: 'Товар',
+                    children: [
+                        {
+                            headerName: 'Фото',
+                            field: 'img',
+                            maxWidth: 80,
+                            pinned: 'left',
+                            sortable: false,
+                            filter: false,
+                            cellRenderer: params => `<img style="height: 32px; width: 32px" src="${params.value}" />`
+                        },
+                        {
+                            headerName: 'Название',
+                            field: 'subject',
+                            pinned: 'left',
+                        }
+                    ]
+                },
+                {
+                    headerName: 'Товар',
+                    children: [
+                        {
+                            headerName: 'Товарная группа',
+                            field: 'category'
+                        },
+                        {
+                            headerName: 'Артикул',
+                            field: 'article',
+                            cellRenderer: params => `2140арт2146олива`
+                        },
+                        {
+                            headerName: 'SKU',
+                            field: 'nmId'
+                        },
+                        {
+                            headerName: 'Бренд',
+                            field: 'brand',
+                            cellRenderer: params => `<a href="/wb/brand/${params.value}">${params.value}</a>`
+                        },
+                        {
+                            headerName: 'Себестоимость',
+                            field: 'prices',
+                            cellRenderer: params => `0`
+                        }
+                    ]
+                },
+                {
+                    headerName: 'Общeе',
+                    children: [
+                        {
+                            headerName: 'API',
+                            children: [
+                                {
+                                    headerName: 'Всего',
+                                    field: 'cityResult',
+                                    maxWidth: 130
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {% for city in cities ?? [] %}
+                {
+                    headerName: '{{ city.name }}',
+                    children: [
+                        {
+                            headerName: 'API',
+                            children: [
+                                {
+                                    headerName: 'Всего',
+                                    field: 'city{{ loop.index }}',
+                                    maxWidth:130
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {% endfor %}
+            ]
+            option['rowData'] = [
+                {% for stock in stocks ?? [] %}
+                {
+                    img: '{{ stock.img }}',
+                    subject: '{{ stock.subject }}',
+                    nmId: '{{ stock.nmId }}',
+                    category: '{{ stock.category }}',
+                    brand: '{{ stock.brand }}',
+                    prices: '',
+                    cityResult: '{{stock.cityResult}}',
+                    {% for city in cities %}
+                    city{{ loop.index }}: '{{ stock.cities[loop.index-1] }}',
+                    {% endfor %}
+                },
+                {% endfor %}
+            ]
+            new agGrid.Grid(document.getElementsByClassName("ag-theme-balham")[0], option)
+        })
+    </script>
+{% endblock %}

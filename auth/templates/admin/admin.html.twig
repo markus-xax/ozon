@@ -1,0 +1,188 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../styles/index/styles.css" rel="stylesheet">
+    <link href="../styles/index/vendor.css" rel="stylesheet">
+    <link href="../styles/summary/summary.css" rel="stylesheet">
+    <link href="../styles/summary/table.css" rel="stylesheet">
+    <link href="../styles/summary/table2.css" rel="stylesheet">
+
+{% endblock %}
+{% block body %}
+    <h3 style="text-align: center;"><a href="{{path('admin_token')}}">Перейти к добавлению токена</a></h3>
+    <form id="create_user" method="post">
+        <h1>Создание пользователя</h1>
+        {% if error ?? false %}
+            {#            <div class="error">{{error}}</div> #}
+            <div class="error">Неверные данные</div>
+        {% endif %}
+        <div>
+            <label>Имя<input name="name" type="text" autocomplete="off"></label>
+        </div>
+        <div>
+            <label>Пароль<input name="password" type="password" autocomplete="off"></label>
+        </div>
+        <div>
+            <label>
+                Дата истечения срока жизни аккаунта
+                <select name="dateExpired">
+                    <option value="always">Навсегда</option>
+                    <option value="60">60 дней</option>
+                    <option value="30">30 дней</option>
+                    <option value="14">14 дней</option>
+                    <option value="7">7 дней</option>
+                </select>
+            </label>
+        </div>
+        <div><input class="submit" type="submit" value="Создать"/></div>
+    </form>
+    <div style="display: flex;align-items: center;flex-direction: column;margin: 0 auto;">
+        <table class="table_sort">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Date expires</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users%}
+                <tr>
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>
+                        {% if user.dateExpired %}
+                            {{user.dateExpired|date("m/d/Y") }}
+                        {% else %}
+                            Date empty
+                        {%endif%}
+                    </td>
+                    <td>
+                        {% if user.status == 1 %}
+                            activated
+                        {% else %}
+                            deactivated
+                        {%endif%}
+                    </td>
+                </tr>
+            {% endfor%}
+            </tbody>
+        </table>
+    </div>
+    <style>
+        .table_sort tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .table_sort tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .table_sort tbody tr:last-of-type {
+            border-bottom: 2px solid #7b8159;
+        }
+
+        .table_sort th,
+        .table_sort td {
+            padding: 12px 15px;
+        }
+
+        .table_sort thead tr {
+            background-color: green;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .table_sort {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            width: 40vw;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #create_user {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            border-radius: 5px;
+            min-width: 400px;
+            width: 40vw;
+            margin: 0 auto;
+        }
+
+        #create_user :only-child {
+            margin: 2vh;
+        }
+
+        label {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        p {
+            margin-bottom: 5vh;
+        }
+
+        .error {
+            color: red;
+            font-size: 2vh;
+            margin: 0;
+        }
+
+        form input {
+            background: wite;
+            text-align: center;
+
+            border-width: 2px;
+            background-color: green;
+            width: 30vw;
+            min-width: 200px;
+            height: 3vh;
+            min-height: 40px;
+            padding: 1vh;
+            border-radius: 20px;
+            font-size: 2vh;
+        }
+
+        .submit {
+            margin-top: 5vh;
+            width: auto;
+            background: green;
+            font-size: 3vh;
+            height: auto;
+            padding: 1vh 3vh;
+            border-radius: 20px;
+            color: black;
+        }
+
+        select {
+            text-align: center;
+        }
+    </style>
+    <script> document.addEventListener('DOMContentLoaded', () => {
+
+    const getSort = ({ target }) => {
+        const order = (target.dataset.order = -(target.dataset.order || -1));
+        const index = [...target.parentNode.cells].indexOf(target);
+        const collator = new Intl.Collator(['en', 'ru'], { numeric: true });
+        const comparator = (index, order) => (a, b) => order * collator.compare(
+            a.children[index].innerHTML,
+            b.children[index].innerHTML
+        );
+        
+        for(const tBody of target.closest('table').tBodies)
+            tBody.append(...[...tBody.rows].sort(comparator(index, order)));
+
+        for(const cell of target.parentNode.cells)
+            cell.classList.toggle('sorted', cell === target);
+    };
+    
+    document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));
+    
+}); </script>
+{% endblock %}

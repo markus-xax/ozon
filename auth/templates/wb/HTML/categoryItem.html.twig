@@ -1,0 +1,670 @@
+<div id="mp-stats-app" class="main-content container-fluid">
+    <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+        <div class="ag-overlay-panel">
+            <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                <div class="mp-loader-static"></div>
+            </div>
+        </div>
+    </div>
+    {% if sales is defined and by_keywords is defined and similar is defined %}
+        <section>
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <div class="card">
+                        <div class="card-header d-flex align-items-start flex-wrap py-3">
+                            <div class="mr-3"><img src="{{ photos[0].t??'' }}"
+                                                   id="10645717popover" class="cursor-pointer"
+                                                   style="max-height: 49px !important; max-width: 49px !important;">
+                                <!----></div>
+                            <div class="d-flex flex-column">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <span>{{ item.full_name??'' }}</span> <span
+                                            class="ml-1">{{ item.brand??'' }}</span>
+                                <div><a href="https://www.wildberries.ru/catalog/{{ sku }}/detail.aspx" target="_blank"
+                                        class="mp-green-link mr-3">{{ item.link??'' }}</a>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-center ml-5 flex-grow-1">
+                                <div class="d-flex align-items-center"><i class="fa fa-info-circle mr-2"></i>
+                                    <div data-v-0b49be3c="" class="d-inline-block text-left mr-1 switcher-xs">
+                                        <div data-v-0b49be3c="" class="switcher-button-wrapper">
+                                            <div data-v-0b49be3c=""
+                                                 class="switch-button mr-1 switch-button-xs switcher-fbs"><input
+                                                        data-v-0b49be3c="" type="checkbox" name="switcher-element-64157"
+                                                        id="switcher-element-64157"> <span data-v-0b49be3c=""><label
+                                                            data-v-0b49be3c=""
+                                                            for="switcher-element-64157"></label></span></div>
+                                            <span data-v-0b49be3c="" class="switcher-text"></span></div>
+                                    </div>
+                                </div>
+                                <div class="d-block-inline dropdown-period align-self-stretch"><!----><!----><!---->
+                                    <!----><!----><!----><!---->
+                                    <div class="btn-group d-flex flex-column flex-lg-block flex-lg-row">
+                                        <div class="dropdown b-dropdown btn-group" id="__BVID__12"><!---->
+                                            <button aria-haspopup="true" aria-expanded="false" type="button"
+                                                    class="btn btn-secondary"
+                                                    id="__BVID__12__BV_toggle_">Период
+                                            </button>
+                                        </div> <!---->
+                                        <div class="btn btn-secondary active">
+                                            <div data-v-1ebd09d2="" class="vue-daterange-picker">
+                                                <div data-v-1ebd09d2="" class="">
+                                                    <input disabled value="{{ d1??'' }} to {{ d2??'' }}" type="text"
+                                                           id="period"/>
+                                                </div><!---->
+                                            </div>
+                                        </div> <!---->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-v-1e0b8860="" class="row">
+                <div data-v-1e0b8860="" class="col-lg col-md-6 col-sm-6">
+                    <div data-v-1e0b8860="" class="widget widget-tile shadow-sm">
+                        <div data-v-1e0b8860="" class="data-info">
+                            <div data-v-1e0b8860="" class="desc">Суммарно</div>
+                            <div data-v-1e0b8860="" class="value"><!----> <!----> <span data-v-1e0b8860=""
+                                                                                        class="number">{{ result??'' }} шт</span>
+                                <span
+                                        data-v-1e0b8860=""
+                                        class="indicator indicator-equal mdi  mx-1"></span> <span
+                                        data-v-1e0b8860="" class="number">{{ summa??'' }} ₽</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-v-1e0b8860="" class="col-lg col-md-6 col-sm-6">
+                    <div data-v-1e0b8860="" class="widget widget-tile shadow-sm">
+                        <div data-v-1e0b8860="" class="data-info">
+                            <div data-v-1e0b8860="" class="desc">Потенциал <i data-v-1e0b8860=""
+                                                                              title="Потенциал выручки (выручка / число дней в наличии) * дней в отчете"
+                                                                              class="far fa-question-circle ml-1"></i> /
+                                Упущенная выручка <i data-v-1e0b8860="" title="Потенциал - Выручка"
+                                                     class="far fa-question-circle ml-1"></i></div>
+                            <div data-v-1e0b8860="" class="value"><!----> <!----> <span data-v-1e0b8860=""
+                                                                                        class="number">{{ summa??'' }}</span>
+                                <span data-v-1e0b8860=""
+                                      class="indicator indicator-equal mdi  mx-1"></span> <span
+                                        data-v-1e0b8860="" class="number text-bold">
+                        0 ₽
+                         (0 %)
+                    </span></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-v-1e0b8860="" class="col-lg col-md-6 col-sm-6">
+                    <div data-v-1e0b8860="" class="widget widget-tile shadow-sm">
+                        <div data-v-1e0b8860="" class="data-info">
+                            <div data-v-1e0b8860="" class="desc">Среднее (в день)</div>
+                            <div data-v-1e0b8860="" class="value"><!----> <!----> <span data-v-1e0b8860=""
+                                                                                        class="number">{{ average??'0' }} шт</span>
+                                <span
+                                        data-v-1e0b8860=""
+                                        class="indicator indicator-equal mdi  mx-1"></span> <span
+                                        data-v-1e0b8860="" class="number">{{ summa_average??'0' }} ₽</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-v-1e0b8860="" class="col-lg col-md-6 col-sm-6">
+                    <div data-v-1e0b8860="" class="widget widget-tile shadow-sm">
+                        <div data-v-1e0b8860="" class="data-info">
+                            <div data-v-1e0b8860="" class="desc">Среднее при наличии (в наличии: {{ count??'' }} дней)
+                                <i data-v-1e0b8860=""
+                                   title="Среднее число продаж, при наличии товара на конец дня (13 дней)"
+                                   class="far fa-question-circle ml-1"></i></div>
+                            <div data-v-1e0b8860="" class="value"><!----> <!----> <span data-v-1e0b8860=""
+                                                                                        class="number">{{ average??'0' }} шт</span>
+                                <span
+                                        data-v-1e0b8860=""
+                                        class="indicator indicator-equal mdi  mx-1"></span> <span
+                                        data-v-1e0b8860="" class="number">{{ summa_average??'0' }} ₽</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-v-1e0b8860="" class="col-lg col-md-6 col-sm-6">
+                    <div data-v-1e0b8860="" class="purchase-info" style="display: none;"><span data-v-1e0b8860=""
+                                                                                               title="Недостаточно данных для точного прогноза"
+                                                                                               class="cursor-help"><svg
+                                    data-v-1e0b8860="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false"
+                                    role="img" aria-label="info circle" xmlns="http://www.w3.org/2000/svg"
+                                    fill="currentColor" class="bi-info-circle text-warning b-icon bi"><g
+                                        data-v-1e0b8860=""><path
+                                            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path
+                                            d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path></g></svg></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xxl-5 col-12 order-1 order-xl-0">
+                    <div class="card">
+                        <div class="card-header d-md-flex align-items-start justify-content-between pb-2 pt-3">
+                            <div>Артикул: {{ sku }}</div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm table-borderless">
+                                <tr>
+                                    <td>
+                                        <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                                             aria-label="box" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                             class="bi-box b-icon bi">
+                                            <g>
+                                                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"></path>
+                                            </g>
+                                        </svg>
+                                    </td>
+                                    <td class="item">Предмет</td>
+                                    <td>{{ item.full_name??'' }}</td>
+                                </tr>
+                                <tr>
+                                    <td><!----></td>
+                                    <td class="item">Название</td>
+                                    <td>{{ item.name??'' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                                             aria-label="globe" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                             class="bi-globe b-icon bi">
+                                            <g>
+                                                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"></path>
+                                            </g>
+                                        </svg>
+                                    </td>
+                                    <td class="item">Бренд</td>
+                                    <td><a href="/wb/brand?brand=United%20Colors%20of%20Benetton"
+                                           target="_blank">{{ item.brand??'' }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                                             aria-label="person" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                             class="bi-person b-icon bi">
+                                            <g>
+                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
+                                            </g>
+                                        </svg>
+                                    </td>
+                                    <td class="item">Пол</td>
+                                    <td>Мальчики</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                                             aria-label="cash stack" xmlns="http://www.w3.org/2000/svg"
+                                             fill="currentColor" class="bi-cash-stack b-icon bi">
+                                            <g>
+                                                <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+                                                <path d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z"></path>
+                                            </g>
+                                        </svg>
+                                    </td>
+                                    <td class="item">Цена</td>
+                                    <td><span>{{ sales.final_price ?? 0 }}</span> ₽
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="icon lead"></td>
+                                    <td class="item">Цена до скидки</td>
+                                    <td><span>{{ sales.price?? 0 }}</span> ₽, скидка
+                                        <span>{{ sales.discount?? 0 }}</span>%
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="icon lead"></td>
+                                    <td class="item">Комиссия</td>
+                                    <td><span>15</span> % FBO /
+                                        <span>12</span> % FBS
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                                             aria-label="shop window" xmlns="http://www.w3.org/2000/svg"
+                                             fill="currentColor" class="bi-shop-window b-icon bi">
+                                            <g>
+                                                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"></path>
+                                            </g>
+                                        </svg>
+                                    </td>
+                                    <td class="item">Поставщик</td>
+                                    <td><span class="mr-2"><a href="/wb/seller?supplierId=10898"
+                                                              target="_blank">{{ item.seller??'' }}</a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                                             aria-label="geo alt" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                             class="bi-geo-alt b-icon bi">
+                                            <g>
+                                                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
+                                                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                                            </g>
+                                        </svg>
+                                    </td>
+                                    <td class="item">Страна</td>
+                                    <td>Италия</td>
+                                </tr> <!---->
+                                <tr>
+                                    <td class="icon"></td>
+                                    <td class="item">Впервые обнаружен</td>
+                                    <td>{{ item.first_date??'' }}</td>
+                                </tr> <!---->
+                                <tr>
+                                    <td>
+                                        <svg viewBox="0 0 16 16" width="1em" height="1em" focusable="false" role="img"
+                                             aria-label="chat left text" xmlns="http://www.w3.org/2000/svg"
+                                             fill="currentColor" class="bi-chat-left-text b-icon bi">
+                                            <g>
+                                                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
+                                                <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"></path>
+                                            </g>
+                                        </svg>
+                                    </td>
+                                    <td class="item align-top">Примечание</td>
+                                    <td><textarea rows="2" maxlength="250"
+                                                  class="form-control form-control-sm"></textarea>
+                                        <button class="btn btn-info btn-xs mt-1">
+                                            Сохранить
+                                            <span aria-hidden="true"
+                                                  class="ml-1 spinner-border spinner-border-sm text-warning"
+                                                  style="display: none;"><!----></span></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card card-table">
+                        <div class="card-header d-md-flex align-items-start justify-content-between pb-2 pt-3">
+                            <div>Фото</div> <!----></div>
+                        <div class="card-body p-3">
+                            <div class="split-carousel" style="padding: 0px;">
+                                <div class="split-carousel--arrow split-carousel--arrow__left" style="display: none;">
+                                    <div class="split-carousel--arrow--left"></div>
+                                </div>
+                                <div class="split-carousel--content">
+                                    <div class="split-carousel--content--container split-carousel--content--container__left"
+                                         style="display:flex;width: auto; margin-left: 0px; height: 120px;">
+                                        {% for photo in photos??[] %}
+                                            <div class="split-carousel-item is-static"
+                                                 style="margin-right: 42px; width: 80px; transition-timing-function: ease;">
+                                                <div class="split-carousel-item--content"><img
+                                                            src="{{ photo.t }}"
+                                                            class="img-thumbnail bgthumb cursor-pointer"></div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="split-carousel--arrow split-carousel--arrow__right" style="display: none;">
+                                    <div class="split-carousel--arrow--right"></div>
+                                </div>
+                            </div> <!----></div>
+                    </div>
+                    <div class="card card-table">
+                        <div class="card-header card-header-divider">
+                            Остатки по складам и размерам на <span>{{ d2 ??'0000-00-00' }}</span></div>
+                        <div class="card-body">
+                            <div class="tabs" id="__BVID__43"><!---->
+                                <div class="">
+                                    <ul role="tablist" class="nav nav-tabs" id="__BVID__43__BV_tab_controls_">
+                                        <li role="presentation" class="nav-item"><a id="graph1"
+                                                                                    onclick="setGraph(1, '__BVID__43__BV_tab_container_')"
+                                                                                    class="nav-link active">Сводка</a>
+                                        </li>
+                                        <li role="presentation" class="nav-item"><a id="income1"
+                                                                                    onclick="setIncomes(1, '__BVID__43__BV_tab_container_')"
+                                                                                    class="nav-link">Склады</a>
+                                        </li>
+                                        <li role="presentation" class="nav-item"><a id="size1"
+                                                                                    onclick="setSize(1, '__BVID__43__BV_tab_container_')"
+                                                                                    class="nav-link">Размеры</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="__BVID__43__BV_tab_container_">
+                                    <div role="tabpanel" aria-hidden="true" class="tab-pane active"
+                                         id="__BVID__43" aria-labelledby="__BVID__43___BV_tab_button__">
+                                        <div>
+                                            <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                                 class="ag-theme-balham">
+                                                <div class="row">
+                                                    <div class="col-12"
+                                                         style="height: 300px;">
+                                                        <div class="chartjs-size-monitor">
+                                                            <div class="chartjs-size-monitor-expand">
+                                                                <div class=""></div>
+                                                            </div>
+                                                            <div class="chartjs-size-monitor-shrink">
+                                                                <div class=""></div>
+                                                            </div>
+                                                        </div>
+                                                        <canvas id="graphic1" width="722" height="269"
+                                                                style="display: block; height: 300px; width: 803px;"
+                                                                class="chartjs-render-monitor"></canvas>
+                                                    </div> <!---->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-hidden="true" class="tab-pane"
+                                         id="__BVID__46" aria-labelledby="__BVID__46___BV_tab_button__">
+                                        <div>
+                                            <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                                 class="ag-theme-balham ag-mini-table">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                                         id="__BVID__49" aria-labelledby="__BVID__49___BV_tab_button__">
+                                        <div>
+                                            <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                                 class="ag-theme-balham ag-mini-table">
+                                            </div>
+                                        </div>
+                                    </div><!----></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-table">
+                        <div class="card-header card-header-divider">
+                            <div class="d-flex justify-content-between">
+                                <div class="mr-5">
+                                    Продажи по складам и размерам
+                                    с <span>{{ d1 ??'0000-00-00' }}</span>
+                                    по <span>{{ d2 ??'0000-00-00' }}</span></div>
+                                <a href="/wb/ordersbyregionsize/{{ sku }}?name={{ sales.category??'' }}&date={{ d1 }} to {{ d2 }}"
+                                   target="_blank" class="btn btn-success">
+                                    История заказов
+                                </a></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="tabs" id="__BVID__52"><!---->
+                                <div class="">
+                                    <ul role="tablist" class="nav nav-tabs" id="__BVID__52__BV_tab_controls_"><!---->
+                                        <li role="presentation" class="nav-item"><a id="graph2"
+                                                                                    onclick="setGraph(2, '__BVID__52__BV_tab_container_')"
+                                                                                    class="nav-link active">Сводка</a>
+                                        <li role="presentation" class="nav-item"><a id="income2"
+                                                                                    onclick="setIncomes(2, '__BVID__52__BV_tab_container_')"
+                                                                                    class="nav-link">Склады</a>
+                                        </li>
+                                        <li role="presentation" class="nav-item"><a id="size2"
+                                                                                    onclick="setSize(2, '__BVID__52__BV_tab_container_')"
+                                                                                    class="nav-link">Размеры</a>
+                                        </li><!----></ul>
+                                </div>
+                                <div class="tab-content" id="__BVID__52__BV_tab_container_">
+                                    <div role="tabpanel" aria-hidden="true" class="tab-pane active"
+                                         id="__BVID__55" aria-labelledby="__BVID__52___BV_tab_button__">
+                                        <div>
+                                            <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                                 class="ag-theme-balham">
+                                                <div class="row">
+                                                    <div class="col-12"
+                                                         style="height: 300px;">
+                                                        <div class="chartjs-size-monitor">
+                                                            <div class="chartjs-size-monitor-expand">
+                                                                <div class=""></div>
+                                                            </div>
+                                                            <div class="chartjs-size-monitor-shrink">
+                                                                <div class=""></div>
+                                                            </div>
+                                                        </div>
+                                                        <canvas id="graphic2" width="722" height="269"
+                                                                style="display: block; height: 300px; width: 803px;"
+                                                                class="chartjs-render-monitor"></canvas>
+                                                    </div> <!---->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-hidden="true" class="tab-pane"
+                                         id="__BVID__55" aria-labelledby="__BVID__55___BV_tab_button__">
+                                        <div>
+                                            <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                                 class="ag-theme-balham ag-mini-table">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                                         id="__BVID__58" aria-labelledby="__BVID__58___BV_tab_button__">
+                                        <div>
+                                            <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                                 class="ag-theme-balham ag-mini-table">
+
+                                            </div>
+                                        </div>
+                                    </div><!----></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="alert" class="alert alert-info alert-simple alert-dismissible mt-3 withoutborder">
+                        <div class="icon"><span class=></span></div>
+                        <div class="message"><span>
+            Данные о наличии и цене - последние из полученных;<br>
+            Изображения товаров транслируются с сайта
+            <a href="https://wildberries.ru/">wildberries.ru</a>
+            и приведены в информационных целях;<br></span>
+                            Под продажей понимается снижение числа товара, доступного для заказа;<br>
+                            Данные о продажах и выручке рассчитываются за <span>60</span> суток и
+                            заканчиваются вчерашним днем.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-7 col-12 order-0 order-xl-1">
+                    <div class="widget widget-fullwidth">
+                        <div class="widget-head">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex flex-column"><span
+                                            class="title">Продажи и остатки за <span>60</span> дней</span>
+                                    <span class="description">На графике отображены условные продажи и остатки товара за те даты, когда значение было получено</span>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" title="Добавление вехи" class="btn btn-secondary"><i
+                                                class="fas fa-map-pin"></i></button>
+                                    <button type="button" title="Список вех" class="btn btn-secondary"><i
+                                                class="fas fa-list"></i></button>
+                                    <button type="button" title="Скрыть вехи" class="btn btn-secondary"><i
+                                                class="fas fa-eye-slash"></i></button> <!----> <!----> <!----> <!---->
+                                </div>
+                            </div>
+                        </div>
+                        <canvas id="graph"
+                                style="display: block; height: 350px; width: 1129px;"
+                                class="chartjs-render-monitor"></canvas>
+                        <div class="widget-chart-container">
+                            <div class="chart-table pt-3">
+                                <div class="ag-container">
+                                    <div>
+                                        <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                             class="ag-theme-balham ag-table">
+                                        </div>
+                                        <button class="excel-btn" onclick="option.api.exportDataAsExcel()">
+                                            Экспорт
+                                            <svg
+                                                    viewBox="0 0 16 16"
+                                                    width="1em"
+                                                    height="1em"
+                                                    focusable="false"
+                                                    role="img"
+                                                    aria-label="file earmark excel"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="currentColor"
+                                                    class="bi-file-earmark-excel b-icon bi"
+                                            >
+                                                <g>
+                                                    <path
+                                                            d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"
+                                                    ></path>
+                                                    <path
+                                                            d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"
+                                                    ></path>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-chart-container" style="display: none;">
+                            <div role="alert" class="alert alert-warning alert-icon mt-3">
+                                <div class="icon"><span class=></span></div>
+                                <div class="message">
+                                    Продаж и остатков за <span>60</span> дней не зафиксировано
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div class="mr-5">
+                                    Похожие товары
+                                </div>
+                                <a href="/wb/similar?sku=10645717" target="_blank" class="btn btn-success">
+                                    Подробный отчет
+                                </a></div>
+                            <span class="card-subtitle">Товары, которые отображаются в блоке Похожие товары на Wildberries <i
+                                        title="Здесь мы предлагаем к оценке не только те товары, которые ВБ показывает как похожие на просматриваемый, но и «похожие на похожие». "
+                                        class="far fa-question-circle"></i></span> <!----></div>
+                        <div class="card-body">
+                            <div class="tabs" id="__BVID__76"><!---->
+                                <div class="">
+                                    <ul role="tablist" class="nav nav-tabs" id="__BVID__76__BV_tab_controls_"><!---->
+                                        <li role="presentation" class="nav-item"><a role="tab" aria-selected="true"
+                                                                                    aria-setsize="2" aria-posinset="1"
+                                                                                    href="#" target="_self"
+                                                                                    class="nav-link active"
+                                                                                    id="__BVID__77___BV_tab_button__"
+                                                                                    aria-controls="__BVID__77">Похожие
+                                                товары</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content p-0 mb-0" id="__BVID__76__BV_tab_container_">
+                                    <div role="tabpanel" aria-hidden="false" class="tab-pane active" style=""
+                                         id="__BVID__77" aria-labelledby="__BVID__77___BV_tab_button__">
+                                        <div class="w35">
+                                            <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                                 class="ag-theme-balham ag-table">
+                                            </div>
+                                            <button class="excel-btn" onclick="option2.api.exportDataAsExcel()">
+                                                Экспорт
+                                                <svg
+                                                        viewBox="0 0 16 16"
+                                                        width="1em"
+                                                        height="1em"
+                                                        focusable="false"
+                                                        role="img"
+                                                        aria-label="file earmark excel"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="currentColor"
+                                                        class="bi-file-earmark-excel b-icon bi"
+                                                >
+                                                    <g>
+                                                        <path
+                                                                d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"
+                                                        ></path>
+                                                        <path
+                                                                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"
+                                                        ></path>
+                                                    </g>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                                         id="__BVID__81" aria-labelledby="__BVID__81___BV_tab_button__"></div><!---->
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ml-3 mt-2">
+                                <div class="d-flex flex-column">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <div class="row-bg-info mr-1" style="background: rgb(66, 133, 244);"></div>
+                                        - товар поставляется по FBS
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!----> <!----> <!----> <!---->
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <div class="float-right"><a href="/wb/keywords/10645717" target="_blank"
+                                                        class="btn btn-success">
+                                    История ключевых слов
+                                </a></div>
+
+                            Запросы и позиции по ним
+                            <span class="card-subtitle">По которым представлен товар в поиске и занимаемая им позиция (<strong>первые 200</strong> с сортировкой по позиции последней даты, частотности)</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="ag-container">
+                                <div class="w35 ag-height-50">
+                                    <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                         class="ag-theme-balham ag-table">
+                                    </div>
+                                    <button class="excel-btn" onclick="option3.api.exportDataAsExcel()">
+                                        Экспорт
+                                        <svg
+                                                viewBox="0 0 16 16"
+                                                width="1em"
+                                                height="1em"
+                                                focusable="false"
+                                                role="img"
+                                                aria-label="file earmark excel"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="currentColor"
+                                                class="bi-file-earmark-excel b-icon bi"
+                                        >
+                                            <g>
+                                                <path
+                                                        d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"
+                                                ></path>
+                                                <path
+                                                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"
+                                                ></path>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="p-3">
+                                <div role="alert" class="alert alert-info alert-icon alert-icon-border">
+                                    <div class="icon"><span class=></span></div>
+                                    <div class="message" style="font-size: 12px; line-height: 14px;">
+                                        В данный отчет гарантированно попадает информация только первой страницы
+                                        результатов поиска на WB (до 100 позиций), для более глубокого анализа
+                                        воспользуйтесь инструментом
+                                        <a href="/seo/position-tracking">Мониторинг позиций</a> (анализ десяти страниц
+                                        поиска, до 1000 позиций)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% else %}
+        <div style="width: 100%;text-align: center;">
+            <h1 class="card">
+                Нет данных
+            </h1>
+        </div>
+    {% endif %}
+    <div><!---->
+        <div class="snotify snotify-left_top"></div>
+        <div class="snotify snotify-left_center"></div>
+        <div class="snotify snotify-left_bottom"></div>
+        <div class="snotify snotify-right_top"></div>
+        <div class="snotify snotify-right_center"></div>
+        <div class="snotify snotify-right_bottom"></div>
+        <div class="snotify snotify-center_top"></div>
+        <div class="snotify snotify-center_center"></div>
+        <div class="snotify snotify-center_bottom"></div>
+    </div>
+</div>

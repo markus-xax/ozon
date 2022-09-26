@@ -1,0 +1,305 @@
+<div id="mp-stats-app" class="main-content container-fluid">
+    <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+        <div class="ag-overlay-panel">
+            <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                <div class="mp-loader-static"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-start">
+                    <div class="d-flex flex-column">
+                        <div class="d-flex justify-content-start">
+                            <div><a>Товары, в которых <strong>{{ path }}</strong> отображался в блоке Похожие товары</a>
+                                <span class="mx-1"></span>
+                            </div>
+                        </div>
+                        <div><a href="https://www.wildberries.ru/catalog/{{ sku }}/detail.aspx"
+                                target="_blank" class="mp-green-link">https://www.wildberries.ru/catalog/{{ sku }}/detail.aspx</a>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex align-items-center"><i class="fa fa-info-circle mr-2"></i>
+                            <div data-v-0b49be3c="" class="d-inline-block text-left mr-1 switcher-xs">
+                                <div data-v-0b49be3c="" class="switcher-button-wrapper">
+                                    <div data-v-0b49be3c=""
+                                         class="switch-button mr-1 switch-button-xs switcher-fbs"><input
+                                                data-v-0b49be3c="" type="checkbox" name="switcher-element-72191"
+                                                id="switcher-element-72191"> <span data-v-0b49be3c=""><label
+                                                    data-v-0b49be3c="" for="switcher-element-72191"></label></span>
+                                    </div>
+                                    <span data-v-0b49be3c="" class="switcher-text"></span></div>
+                            </div>
+                        </div>
+                        <div class="dropdown b-dropdown mr-2 align-self-stretch btn-group" id="__BVID__206"><!---->
+                        </div>
+                        <div class="d-block-inline dropdown-period"><!----><!----><!----><!----><!----><!---->
+                            <!---->
+                            <div class="btn-group d-flex flex-column flex-lg-block flex-lg-row">
+                                <div class="dropdown b-dropdown btn-group" id="__BVID__51"><!---->
+                                    <button aria-haspopup="true" aria-expanded="false" type="button"
+                                            class="btn btn-secondary" id="__BVID__51__BV_toggle_">
+                                        Период
+                                    </button>
+                                </div> <!---->
+                                <div class="btn btn-secondary active">
+                                    <div data-v-1ebd09d2="" class="vue-daterange-picker">
+                                        <div data-v-1ebd09d2="" class=""><i data-v-1ebd09d2=""
+                                                                            class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                            <span data-v-1ebd09d2="">09.04.2022 - 08.05.2022</span><b
+                                                    data-v-1ebd09d2="" class="caret"></b></div><!----></div>
+                                </div> <!----></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tabs" id="__BVID__68"><!---->
+                    <div class="">
+                        <ul role="tablist" class="nav nav-tabs" id="__BVID__68__BV_tab_controls_"><!---->
+                            <li role="presentation" class="nav-item"><a role="tab" aria-selected="true"
+                                                                        aria-setsize="11" aria-posinset="1" href="#"
+                                                                        target="_self" class="nav-link active"
+                                                                        id="__BVID__69___BV_tab_button__"
+                                                                        aria-controls="__BVID__69">Товары</a></li>
+                            <li role="presentation" class="nav-item"><a role="tab" aria-selected="false"
+                                                                        aria-setsize="11" aria-posinset="2" href="#"
+                                                                        target="_self" class="nav-link"
+                                                                        id="__BVID__75___BV_tab_button__"
+                                                                        aria-controls="__BVID__75" tabindex="-1">Подкатегории</a>
+                            </li>
+                            <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                        aria-selected="false" aria-setsize="11"
+                                                                        aria-posinset="3" href="#" target="_self"
+                                                                        class="nav-link"
+                                                                        id="__BVID__77___BV_tab_button__"
+                                                                        aria-controls="__BVID__77">Бренды</a></li>
+                            <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                        aria-selected="false" aria-setsize="11"
+                                                                        aria-posinset="4" href="#" target="_self"
+                                                                        class="nav-link"
+                                                                        id="__BVID__79___BV_tab_button__"
+                                                                        aria-controls="__BVID__79">Продавцы</a></li>
+                            <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                        aria-selected="false" aria-setsize="11"
+                                                                        aria-posinset="5" href="#" target="_self"
+                                                                        class="nav-link"
+                                                                        id="__BVID__82___BV_tab_button__"
+                                                                        aria-controls="__BVID__82">Тренд</a></li>
+                            <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                        aria-selected="false" aria-setsize="11"
+                                                                        aria-posinset="6" href="#" target="_self"
+                                                                        class="nav-link"
+                                                                        id="__BVID__84___BV_tab_button__"
+                                                                        aria-controls="__BVID__84">По дням</a></li>
+                            <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                        aria-selected="false" aria-setsize="11"
+                                                                        aria-posinset="7" href="#" target="_self"
+                                                                        class="nav-link"
+                                                                        id="__BVID__86___BV_tab_button__"
+                                                                        aria-controls="__BVID__86">Ценовая
+                                    сегментация</a></li>
+                            <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                        aria-selected="false" aria-setsize="11"
+                                                                        aria-posinset="8" href="#" target="_self"
+                                                                        class="nav-link"
+                                                                        id="__BVID__88___BV_tab_button__"
+                                                                        aria-controls="__BVID__88">Сравнение
+                                    периодов</a></li>
+                            <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                        aria-selected="false" aria-setsize="11"
+                                                                        aria-posinset="9" href="#" target="_self"
+                                                                        class="nav-link"
+                                                                        id="__BVID__90___BV_tab_button__"
+                                                                        aria-controls="__BVID__90">Предметы</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" id="__BVID__68__BV_tab_container_">
+                        <div role="tabpanel" aria-hidden="false" class="tab-pane active" style="" id="__BVID__69"
+                             aria-labelledby="__BVID__69___BV_tab_button__">
+                            <div>
+                                <div class="mb-2 w35">
+                                    <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                         class="ag-theme-balham">
+
+                                    </div>
+                                    <button class="excel-btn" onclick="option.api.exportDataAsExcel()">
+                                        Экспорт
+                                        <svg
+                                                viewBox="0 0 16 16"
+                                                width="1em"
+                                                height="1em"
+                                                focusable="false"
+                                                role="img"
+                                                aria-label="file earmark excel"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="currentColor"
+                                                class="bi-file-earmark-excel b-icon bi"
+                                        >
+                                            <g>
+                                                <path
+                                                        d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"
+                                                ></path>
+                                                <path
+                                                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"
+                                                ></path>
+                                            </g>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div class="d-flex flex-column">
+                                        <div class="d-flex align-items-center mb-1">
+                                            <div class="row-bg-info mr-1"
+                                                 style="background: rgb(66, 133, 244);"></div>
+                                            - товар поставляется по FBS
+                                        </div>
+                                    </div>
+                                </div>
+                                <div role="alert"
+                                     class="alert alert-info alert-simple alert-dismissible mt-3 withoutborder">
+                                    <div class="icon"><span class=></span></div>
+                                    <div class="message"><span>
+            Данные о наличии и цене - последние из полученных;<br>
+            Изображения товаров транслируются с сайта
+            <a href="https://wildberries.ru/">wildberries.ru</a>
+            и приведены в информационных целях;<br></span>
+                                        Под продажей понимается снижение числа товара, доступного для заказа;<br>
+                                        Данные о продажах и выручке рассчитываются за <span>30</span> суток и
+                                        заканчиваются вчерашним днем.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__75" aria-labelledby="__BVID__75___BV_tab_button__">
+                            <div class="row"><!---->
+                                <div class="col-12 col-md-6">
+                                    <div class="" local-storage-id="MpChart/wb/categories/subcategories/sales/state"
+                                         style="height: 350px; position: relative;">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div>
+                                        <canvas id="doughnut-chart" width="487" height="314"
+                                                style="display: block; height: 350px; width: 542px;"
+                                                class="chartjs-render-monitor"></canvas>
+                                        <div class="mp-loader-overlay ag-overlay hidden" aria-hidden="true">
+                                            <div class="ag-overlay-panel">
+                                                <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                                                    <div class="mp-loader-static"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class=""
+                                         local-storage-id="MpChart/wb/categories/subcategories/proceeds/state"
+                                         style="height: 350px; position: relative;">
+                                        <div class="chartjs-size-monitor">
+                                            <div class="chartjs-size-monitor-expand">
+                                                <div class=""></div>
+                                            </div>
+                                            <div class="chartjs-size-monitor-shrink">
+                                                <div class=""></div>
+                                            </div>
+                                        </div>
+                                        <canvas id="doughnut-chart" width="487" height="314"
+                                                style="display: block; height: 350px; width: 542px;"
+                                                class="chartjs-render-monitor"></canvas>
+                                        <div class="mp-loader-overlay ag-overlay hidden" aria-hidden="true">
+                                            <div class="ag-overlay-panel">
+                                                <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                                                    <div class="mp-loader-static"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 w35 mt-5 ag-grid-header-normal">
+                                    <div tooltip-show-delay="200" groupdisplaytype="singleColumn"
+                                         class="ag-theme-balham">
+
+                                    </div>
+
+                                </div>
+                                <div role="alert"
+                                     class="alert alert-info alert-simple alert-dismissible mt-3 withoutborder">
+                                    <div class="icon"><span class=></span></div>
+                                    <div class="message"><!---->
+                                        Под продажей понимается снижение числа товара, доступного для заказа;<br>
+                                        Данные о продажах и выручке рассчитываются за <span>30</span> суток и
+                                        заканчиваются вчерашним днем.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__77" aria-labelledby="__BVID__77___BV_tab_button__"></div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__79" aria-labelledby="__BVID__79___BV_tab_button__">
+                            <div data-v-47c031c1="" class="row">
+                                <div data-v-47c031c1="" class="col-12 col-lg-12 col-xl-10 offset-xl-1">
+                                    <div data-v-47c031c1="" class="card card-flat be-loading text-center">
+                                        <div data-v-47c031c1="" class="card-header">
+                                            <svg data-v-47c031c1="" viewBox="0 0 16 16" width="1em" height="1em"
+                                                 focusable="false" role="img" aria-label="door closed"
+                                                 xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                 class="bi-door-closed text-secondary b-icon bi"
+                                                 style="opacity: 0.3; font-size: 500%;">
+                                                <g data-v-47c031c1="">
+                                                    <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2zm1 13h8V2H4v13z"></path>
+                                                    <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"></path>
+                                                </g>
+                                            </svg>
+                                        </div>
+                                        <div data-v-47c031c1="" class="card-body"><p data-v-47c031c1="">Эта функция
+                                                недоступна на <b data-v-47c031c1="">корпоративном</b> тарифе, для
+                                                доступа к ней
+                                                требуется подписка на <b data-v-47c031c1="">-</b> тарифный план.</p>
+                                            <p data-v-47c031c1="">Если у вас есть вопросы, напишите запрос на <a
+                                                        data-v-47c031c1="" href="mailto:info@mpstats.io"
+                                                        target="_blank">info@mpstats.io</a>
+                                                или обратитесь в онлайн помощник, форма которого расположена справа,
+                                                снизу.</p> <a data-v-47c031c1="" href="/i-need-more"
+                                                              class="btn btn-primary btn-xl toggle-loading">Повысить
+                                                тариф</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__82" aria-labelledby="__BVID__82___BV_tab_button__"></div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__84" aria-labelledby="__BVID__84___BV_tab_button__"></div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__86" aria-labelledby="__BVID__86___BV_tab_button__"></div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__88" aria-labelledby="__BVID__88___BV_tab_button__"></div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__90" aria-labelledby="__BVID__90___BV_tab_button__"></div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__92" aria-labelledby="__BVID__92___BV_tab_button__"></div>
+                        <div role="tabpanel" aria-hidden="true" class="tab-pane" style="display: none;"
+                             id="__BVID__94" aria-labelledby="__BVID__94___BV_tab_button__"></div><!----></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div><!---->
+        <div class="snotify snotify-left_top"></div>
+        <div class="snotify snotify-left_center"></div>
+        <div class="snotify snotify-left_bottom"></div>
+        <div class="snotify snotify-right_top"></div>
+        <div class="snotify snotify-right_center"></div>
+        <div class="snotify snotify-right_bottom"></div>
+        <div class="snotify snotify-center_top"></div>
+        <div class="snotify snotify-center_center"></div>
+        <div class="snotify snotify-center_bottom"></div>
+    </div>
+</div>

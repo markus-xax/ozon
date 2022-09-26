@@ -1,0 +1,563 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../../styles/index/styles.css" rel="stylesheet">
+    <link href="../../styles/index/vendor.css" rel="stylesheet">
+    <link href="../../styles/summary/summary.css" rel="stylesheet">
+    <link href="../../styles/summary/table.css" rel="stylesheet">
+    <link href="../../styles/summary/table2.css" rel="stylesheet">
+
+{% endblock %}
+{% block body %}
+    <div id="mp-stats-app" class="main-content container-fluid">
+        <div id="global-loader-block" class="mp-loader-overlay ag-overlay hidden">
+            <div class="ag-overlay-panel">
+                <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                    <div class="mp-loader-static"></div>
+                </div>
+            </div>
+        </div>
+        <div data-v-0ead128c="" id="app-layout">
+            <div data-v-79428166="" data-v-0ead128c="">
+                <div data-v-79428166="" class="card">
+                    <div data-v-79428166=""
+                         class="card-header d-md-flex justify-content-between align-items-start pb-3 pt-3">
+                        <nav data-v-79428166="" aria-label="breadcrumb" role="navigation">
+                            <ol data-v-79428166="" class="breadcrumb page-head-nav page-header pl-0 mb-0">
+                                <li data-v-79428166="" class="breadcrumb-item">
+                                    Поисковая выдача первой страницы (топ 100) по запросу: <strong
+                                            data-v-79428166="">{{ word }}</strong> <a data-v-79428166=""
+                                                                                      href="https://wildberries.ru/catalog/0/search.aspx?search={{ word }}&amp;xsearch=true"
+                                                                                      target="_blank"
+                                                                                      title="Открыть в поиске на Wildberries"
+                                                                                      class="mr-1">
+                                        <svg data-v-79428166="" viewBox="0 0 16 16" width="1em" height="1em"
+                                             focusable="false" role="img" aria-label="search"
+                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                             class="bi-search b-icon bi">
+                                            <g data-v-79428166="">
+                                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                                            </g>
+                                        </svg>
+                                    </a></li>
+                            </ol>
+                        </nav>
+                        <div data-v-79428166=""
+                             class="d-flex flex-column flex-lg-row justify-content-between justify-content-lg-start align-items-lg-center">
+                            <div data-v-79428166=""
+                                 class="d-flex flex-column flex-lg-block flex-lg-row align-items-center"><a
+                                        data-v-79428166="" href="/seo/keyword" class="btn btn-outline-success mr-3">Новый
+                                    запрос</a>
+                                <div data-v-0b49be3c="" data-v-79428166=""
+                                     class="d-inline-block text-left mr-1 switcher-xs">
+                                    <div data-v-0b49be3c="" class="switcher-button-wrapper">
+                                        <div data-v-0b49be3c=""
+                                             class="switch-button mr-1 switch-button-xs switcher-fbs"><input
+                                                    data-v-0b49be3c="" type="checkbox" name="switcher-element-73565"
+                                                    id="switcher-element-73565"> <span data-v-0b49be3c=""><label
+                                                        data-v-0b49be3c="" for="switcher-element-73565"></label></span>
+                                        </div>
+                                        <span data-v-0b49be3c="" class="switcher-text"></span></div>
+                                </div>
+                                <div data-v-79428166="" class="d-block-inline dropdown-period"><!----><!----><!---->
+                                    <!----><!----><!---->
+                                    <div class="btn-group d-flex flex-column flex-lg-block flex-lg-row">
+                                        <div class="dropdown b-dropdown btn-group" id="__BVID__16"><!---->
+                                            <button aria-haspopup="true" aria-expanded="false" type="button"
+                                                    class="btn btn-secondary"
+                                                    id="__BVID__16__BV_toggle_">Период
+                                            </button>
+                                        </div> <!---->
+                                        <div class="btn btn-secondary active">
+                                            <div data-v-1ebd09d2="" class="vue-daterange-picker">
+                                                <div data-v-1ebd09d2="" class=""><i data-v-1ebd09d2=""
+                                                                                    class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                                    <span data-v-1ebd09d2="">08.03.2022 - 06.04.2022</span><b
+                                                            data-v-1ebd09d2="" class="caret"></b></div><!----></div>
+                                        </div> <!----></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-v-1c8d95b2="" data-v-79428166="" class="row">
+                    <div data-v-1c8d95b2="" class="col-12" style="display: none;">
+                        <div data-v-1c8d95b2="" class="card py-2"><!----><!---->
+                            <div data-v-1c8d95b2="" class="card-body"><!----><!---->
+                                <div data-v-1c8d95b2=""
+                                     class="d-flex flex-column justify-content-center align-items-center">
+                                    <svg data-v-1c8d95b2="" viewBox="0 0 16 16" width="1em" height="1em"
+                                         focusable="false" role="img" aria-label="table"
+                                         xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                         class="bi-table text-secondary b-icon bi"
+                                         style="opacity: 0.3; font-size: 500%;">
+                                        <g data-v-1c8d95b2="">
+                                            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"></path>
+                                        </g>
+                                    </svg>
+                                    <h4 data-v-1c8d95b2="" class="my-4">Мы не смогли найти ключевое слово или у нас нет
+                                        данных за указанный период</h4></div>
+                            </div><!----><!----></div>
+                    </div> <!----><!----><!----><!----><!----><!---->
+                    <div data-v-1c8d95b2=""
+                         class="summary-number-wrapper col-sm-12 col-md-6 col-lg card-border-color-info">
+                        <div data-v-1c8d95b2=""
+                             class="summary-numbers widget widget-tile flex-column p-2 d-block border-color-light">
+                            <div data-v-1c8d95b2="" class="title desc text-right"><span
+                                        data-v-1c8d95b2="">Параметры</span>
+                                <svg data-v-1c8d95b2="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false"
+                                     role="img" aria-label="info circle" id="params" xmlns="http://www.w3.org/2000/svg"
+                                     fill="currentColor" class="bi-info-circle b-icon bi">
+                                    <g data-v-1c8d95b2="">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Частотность запроса по OZON"
+                                                                                           class="title mr-1">Частота</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ count }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Кол-во результатов в выдаче"
+                                                                                           class="title mr-1">Результатов в поиске</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ results }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span
+                                                    class="title mr-1">&nbsp;</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span data-v-1c8d95b2="">&nbsp;</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-v-1c8d95b2=""
+                         class="summary-number-wrapper col-sm-12 col-md-6 col-lg card-border-color-info">
+                        <div data-v-1c8d95b2=""
+                             class="summary-numbers widget widget-tile flex-column p-2 d-block border-color-success">
+                            <div data-v-1c8d95b2="" class="title desc text-right"><span data-v-1c8d95b2="">Товары</span>
+                                <svg data-v-1c8d95b2="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false"
+                                     role="img" aria-label="info circle" id="items" xmlns="http://www.w3.org/2000/svg"
+                                     fill="currentColor" class="bi-info-circle b-icon bi">
+                                    <g data-v-1c8d95b2="">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Число товаров"
+                                                                                           class="title mr-1">Всего</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ items }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Число товаров с продажами больше 0"
+                                                                                           class="title mr-1">С продажами</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ items_with_sells }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Процент товаров, имеющих продажи"
+                                                                                           class="title mr-1">% с продажами</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ items_with_sells_percent }}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-v-1c8d95b2=""
+                         class="summary-number-wrapper col-sm-12 col-md-6 col-lg card-border-color-info">
+                        <div data-v-1c8d95b2=""
+                             class="summary-numbers widget widget-tile flex-column p-2 d-block border-color-warning">
+                            <div data-v-1c8d95b2="" class="title desc text-right"><span
+                                        data-v-1c8d95b2="">Продавцы</span>
+                                <svg data-v-1c8d95b2="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false"
+                                     role="img" aria-label="info circle" id="sellers" xmlns="http://www.w3.org/2000/svg"
+                                     fill="currentColor" class="bi-info-circle b-icon bi">
+                                    <g data-v-1c8d95b2="">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span
+                                                    class="title mr-1">Всего</span>
+                                            <span data-v-1c8d95b2=""
+                                                  class="new-value ml-auto"><span>{{ sellers }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Число продавцов с продажами больше 0"
+                                                                                           class="title mr-1">С продажами</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ sellers_with_sells }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Процент продавцов, имеющих продажи"
+                                                                                           class="title mr-1">% с продажами</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ sellers_with_sells_percent }}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-v-1c8d95b2=""
+                         class="summary-number-wrapper col-sm-12 col-md-6 col-lg card-border-color-info">
+                        <div data-v-1c8d95b2=""
+                             class="summary-numbers widget widget-tile flex-column p-2 d-block border-color-danger">
+                            <div data-v-1c8d95b2="" class="title desc text-right"><span data-v-1c8d95b2="">Бренды</span>
+                                <svg data-v-1c8d95b2="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false"
+                                     role="img" aria-label="info circle" id="brands" xmlns="http://www.w3.org/2000/svg"
+                                     fill="currentColor" class="bi-info-circle b-icon bi">
+                                    <g data-v-1c8d95b2="">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Кол-во брендов"
+                                                                                           class="title mr-1">Всего</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ brands }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Кол-во брендов с продажами больше 0"
+                                                                                           class="title mr-1">С продажами</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ brands_with_sells }}</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Процент брендов, имеющих продажи"
+                                                                                           class="title mr-1">% с продажами</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ brands_with_sells_percent }}</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-v-1c8d95b2=""
+                         class="summary-number-wrapper col-sm-12 col-md-6 col-lg card-border-color-info">
+                        <div data-v-1c8d95b2=""
+                             class="summary-numbers widget widget-tile flex-column p-2 d-block border-color-info">
+                            <div data-v-1c8d95b2="" class="title desc text-right"><span data-v-1c8d95b2="">Цены</span>
+                                <svg data-v-1c8d95b2="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false"
+                                     role="img" aria-label="info circle" id="prices" xmlns="http://www.w3.org/2000/svg"
+                                     fill="currentColor" class="bi-info-circle b-icon bi">
+                                    <g data-v-1c8d95b2="">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Минимальная и максимальная цена за период"
+                                                                                           class="title mr-1">Мин. / Макс</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ final_price_min }} ₽ / {{ final_price_max }} ₽</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Средняя цена за период"
+                                                                                           class="title mr-1">Средняя</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ final_price_average }} ₽</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Медианное значение цены"
+                                                                                           class="title mr-1">Медианная</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ price_median??'0' }} ₽</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-v-1c8d95b2=""
+                         class="summary-number-wrapper col-sm-12 col-md-6 col-lg card-border-color-info">
+                        <div data-v-1c8d95b2=""
+                             class="summary-numbers widget widget-tile flex-column p-2 d-block border-color-primary">
+                            <div data-v-1c8d95b2="" class="title desc text-right"><span
+                                        data-v-1c8d95b2="">Финансы</span>
+                                <svg data-v-1c8d95b2="" viewBox="0 0 16 16" width="1em" height="1em" focusable="false"
+                                     role="img" aria-label="info circle" id="finance" xmlns="http://www.w3.org/2000/svg"
+                                     fill="currentColor" class="bi-info-circle b-icon bi">
+                                    <g data-v-1c8d95b2="">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+                                        <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                <div data-v-1c8d95b2="" class="d-flex flex-column">
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Выручка"
+                                                                                           class="title mr-1">Выручка</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ revenue }} ₽</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Сумма выручки, разделенная на число товаров с продажами"
+                                                                                           class="title mr-1">Выручка на товар</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ product_revenue }} ₽</span></span>
+                                        </div>
+                                    </div>
+                                    <div data-v-1c8d95b2="" class="data-info mt-2">
+                                        <div data-v-1c8d95b2="" class="value d-flex"><span data-v-1c8d95b2=""
+                                                                                           title="Продано единиц товаров"
+                                                                                           class="title mr-1">Продаж</span>
+                                            <span data-v-1c8d95b2="" class="new-value ml-auto"><span
+                                                        data-v-1c8d95b2="">{{ sales }} шт</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-v-79428166="" class="card card-table">
+                    <div data-v-79428166="" class="card-body">
+                        <div data-v-79428166="" class="tabs" id="__BVID__52"><!---->
+                            <div class="">
+                                <ul role="tablist" class="nav nav-tabs" id="__BVID__52__BV_tab_controls_"><!---->
+                                    <li role="presentation" class="nav-item"><a role="tab"
+                                                                                aria-setsize="2" aria-posinset="1"
+                                                                                href="#" target="_self"
+                                                                                class="nav-link active"
+                                                                                id="__BVID__53___BV_tab_button__"
+                                                                                aria-controls="__BVID__53">История
+                                            выдачи</a></li>
+                                    <li role="presentation" class="nav-item"><a role="tab" tabindex="-1"
+                                                                                aria-setsize="2"
+                                                                                aria-posinset="2" href="#"
+                                                                                target="_self" class="nav-link"
+                                                                                id="__BVID__56___BV_tab_button__"
+                                                                                aria-controls="__BVID__56">Похожие
+                                            запросы</a></li><!----></ul>
+                            </div>
+                            <div class="tab-content mt-3 mb-0 p-0" id="__BVID__52__BV_tab_container_">
+                                <div data-v-79428166="" role="tabpanel" class="tab-pane active"
+                                     style="" id="__BVID__53" aria-labelledby="__BVID__53___BV_tab_button__">
+                                    <div data-v-1a74f0f1="" data-v-79428166="">
+                                        <div data-v-1a74f0f1="" class="ag-container">
+                                            <div data-v-1a74f0f1="" class="w35 ag-height-70">
+                                                <div groupdisplaytype="singleColumn" class="ag-theme-balham">
+                                                </div>
+                                                <button class="excel-btn" onclick="option.api.exportDataAsExcel()">
+                                                    Экспорт
+                                                    <svg
+                                                            viewBox="0 0 16 16"
+                                                            width="1em"
+                                                            height="1em"
+                                                            focusable="false"
+                                                            role="img"
+                                                            aria-label="file earmark excel"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="currentColor"
+                                                            class="bi-file-earmark-excel b-icon bi"
+                                                    >
+                                                        <g>
+                                                            <path
+                                                                    d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"
+                                                            ></path>
+                                                            <path
+                                                                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"
+                                                            ></path>
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div data-v-1a74f0f1="" class="d-flex justify-content-between mt-3 ml-3">
+                                                <div data-v-1a74f0f1="" class="d-flex flex-column">
+                                                    <div data-v-1a74f0f1="" class="d-flex align-items-center mb-1">
+                                                        <div data-v-1a74f0f1="" class="row-bg-info mr-1"
+                                                             style="background: rgb(66, 133, 244);"></div>
+                                                        - товар поставляется по FBS
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!----><!----><!----> <!----></div>
+                                </div>
+                                <div data-v-79428166="" role="tabpanel" class="tab-pane"
+                                     style="display: none;" id="__BVID__56"
+                                     aria-labelledby="__BVID__56___BV_tab_button__"></div><!----></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div><!---->
+            <div class="snotify snotify-left_top"></div>
+            <div class="snotify snotify-left_center"></div>
+            <div class="snotify snotify-left_bottom"></div>
+            <div class="snotify snotify-right_top"></div>
+            <div class="snotify snotify-right_center"></div>
+            <div class="snotify snotify-right_bottom"></div>
+            <div class="snotify snotify-center_top"></div>
+            <div class="snotify snotify-center_center"></div>
+            <div class="snotify snotify-center_bottom"></div>
+        </div>
+    </div>
+    <script>
+        let option = {}
+        document.addEventListener("DOMContentLoaded", () => {
+            option = {...getOptions()}
+            option['columnDefs'] = [
+                {
+                    headerName: 'Фото',
+                    field: 'thumb',
+                    maxWidth: 80,
+                    sortable: false,
+                    filter: false,
+                    pinned: 'left',
+                    cellRenderer: params => `<img style="height: 32px; width: 32px" src="${params.value}" />`
+                },
+                {
+                    headerName: 'SKU',
+                    field: 'id',
+                    wrapText: true,
+                    autoHeight: true,
+                    pinned: 'left',
+                    cellRenderer: params => `<a href="https://www.wildberries.ru/catalog/${params.value}/detail.aspx">${params.value}</a>`
+                },
+                {
+                    headerName: 'Название',
+                    field: 'name',
+                    cellRenderer: params => `<a href="/wb/item/${params.data.sku}">${params.value}</a>`,
+                    pinned: 'left',
+                },
+                {
+                    headerName: 'Бренд',
+                    field: 'brand',
+                    wrapText: true,
+                    autoHeight: true,
+                    cellRenderer: params => `<a href="/wb/brand/${params.value}">${params.value}</a>`
+                },
+                {
+                    headerName: 'Продавец',
+                    field: 'seller',
+                },
+                {
+                    headerName: 'Наличие',
+                    field: 'balance',
+                    wrapText: true,
+                    autoHeight: true,
+                },
+                {
+                    headerName: 'Комментарии',
+                    field: 'comments',
+                    wrapText: true,
+                    autoHeight: true,
+                },
+                {
+                    headerName: 'Рейтинг',
+                    field: 'rating',
+                    wrapText: true,
+                    autoHeight: true,
+                },
+                {
+                    headerName: 'Цена',
+                    field: 'final_price',
+                    wrapText: true,
+                    autoHeight: true,
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {
+                    headerName: 'Продаж',
+                    field: 'sales',
+                    wrapText: true,
+                    autoHeight: true,
+                },
+                {
+                    headerName: 'Выручка',
+                    field: 'revenue',
+                    wrapText: true,
+                    autoHeight: true,
+                    cellRenderer: params => `<p class="number">${params.value}</p>`
+                },
+                {% for date in dates %}
+                {
+                    headerName: '{{ date }}',
+                    field: 'date{{ loop.index }}',
+                    wrapText: true,
+                    autoHeight: true,
+                    cellRenderer: params => `<span style="display: flex;"><div> ${params.value.pos}</div><div class="pl-1"><span class="diff text-danger ${params.value.pos > params.value.prev ? 'negative' : 'positive'}">${(params.value.pos - params.value.prev) === 0 ? '' : -(params.value.pos - params.value.prev)}</span></div></span>`
+                },
+                {% endfor %}
+            ]
+            option['rowData'] = [
+                {% for item in keywords %}
+                {
+                    thumb: '{{ item.thumb }}',
+                    id: '{{ item.id }}',
+                    name: '{{ item.name }}',
+                    brand: '{{ item.brand }}',
+                    balance: '{{ item.balance }}',
+                    comments: '{{ item.comments }}',
+                    seller: '{{ item.seller }}',
+                    rating: '{{ item.rating }}',
+                    final_price: '{{ item.final_price }} ₽',
+                    sales: '{{ item.sales }}',
+                    revenue: '{{ item.revenue }} ₽',
+                    {% for pos in item.positions %}
+                    date{{ loop.index }}: {pos: {{ pos }}, prev: {{ item.positions_prev[loop.index-1] }}},
+                    {% endfor %}
+                },
+                {% endfor %}
+            ]
+            new agGrid.Grid(document.getElementsByClassName("ag-theme-balham")[0], option)
+        })
+
+        function redirect(element) {
+            window.location.href = "/wb/item/" + element.id + "?name=" + element.children[4].innerText
+        }
+    </script>
+{% endblock %}

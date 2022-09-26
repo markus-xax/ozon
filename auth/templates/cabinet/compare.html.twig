@@ -1,0 +1,149 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../styles/index/styles.css" rel="stylesheet">
+    <link href="../styles/index/vendor.css" rel="stylesheet">
+    <link href="../styles/summary/summary.css" rel="stylesheet">
+    <link href="../styles/summary/table.css" rel="stylesheet">
+    <link href="../styles/summary/table2.css" rel="stylesheet">
+    <link href="../styles/summary/table2.css" rel="stylesheet">
+    <link href="../styles/jquery-spinner.min.css" rel="stylesheet">
+    <script src="../script/jquery-spinner.min.js" />
+
+{% endblock %}
+{% block body %}
+    <div style="display: flex;">
+        <div style="display:
+            {% if date is defined %}
+                none
+            {% else %}
+                block
+            {%endif%};" id="compare" class="main-content container-fluid">
+            <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+                <div class="ag-overlay-panel">
+                    <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                        <div class="mp-loader-static"></div>
+                    </div>
+                </div>
+            </div> <!---->
+            <div class="card">
+                <div class="card-header d-md-flex justify-content-between align-items-start">
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb page-head-nav page-header pl-0 mb-0">
+                            <li class="breadcrumb-item"><a href="/cabinet/summary">Сводка</a></li>
+                            <li class="breadcrumb-item">Сравнение периодов</li>
+                        </ol>
+                    </nav> <!----></div>
+                <div class="card-body" style="position: relative;">
+                    <div class="text-center">
+                        <button onclick="closeCompare()" class="btn btn-warning">Сравнение периодов</button>
+                    </div> <!----> <!----> <!---->
+                    <div class="mp-loader-overlay ag-overlay hidden" aria-hidden="true">
+                        <div class="ag-overlay-panel">
+                            <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                                <div class="mp-loader-static"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!----></div>
+            <div><!---->
+                <div class="snotify snotify-left_top"></div>
+                <div class="snotify snotify-left_center"></div>
+                <div class="snotify snotify-left_bottom"></div>
+                <div class="snotify snotify-right_top"></div>
+                <div class="snotify snotify-right_center"></div>
+                <div class="snotify snotify-right_bottom"></div>
+                <div class="snotify snotify-center_top"></div>
+                <div class="snotify snotify-center_center"></div>
+                <div class="snotify snotify-center_bottom"></div>
+            </div>
+        </div>
+        {% include 'cabinet/HTML/compare.html.twig' %}
+        <div id="comparePeriodsModal___BV_modal_outer_" style="position: absolute;z-index: 1040;width: 500px;left: 40vw;height:400px;display:
+        {% if date is defined %}
+                none
+        {% else %}
+                block
+            {%endif%};">
+            <div id="comparePeriods" role="dialog" aria-labelledby="comparePeriodsModal___BV_modal_title_"
+                 aria-describedby="comparePeriodsModal___BV_modal_body_"
+                 class=" show colored-header colored-header-success" aria-modal="true"
+                 style="display: block;height: inherit;">
+                <div class="modal-dialog modal-md modal-dialog-centered" style="z-index: 1050;height: inherit;"><span tabindex="0"></span>
+                    <div id="comparePeriodsModal___BV_modal_content_" tabindex="-1" class="modal-content">
+                        <header id="comparePeriodsModal___BV_modal_header_" class="modal-header"><h5
+                                    id="comparePeriodsModal___BV_modal_title_" class="modal-title"> Сравнение
+                                периодов</h5>
+                            <button type="button" aria-label="Close" class="close">×</button>
+                        </header>
+                        <div id="comparePeriodsModal___BV_modal_body_" class="modal-body"><p>Выберите период для
+                                сравнения: периоды или конкретные даты</p>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td class="text-center"><h3 class="mt-0">A</h3></td>
+                                    <td class="text-center"><h3 class="mt-0">B</h3></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div data-v-1ebd09d2="" class="vue-daterange-picker">
+                                            <div data-v-1ebd09d2=""
+                                                 class="form-control form-control-sm reportrange-text d-flex align-items-center">
+                                                <i data-v-1ebd09d2=""
+                                                   class="glyphicon glyphicon-calendar fa fa-calendar"></i> <input disabled value="{{ d11??'' }} to {{ d12??'' }}" type="text" id="period1" /><b
+                                                        data-v-1ebd09d2="" class="caret"></b></div><!----></div>
+                                    </td>
+                                    <td>
+                                        <div data-v-1ebd09d2="" class="vue-daterange-picker">
+                                            <div data-v-1ebd09d2=""
+                                                 class="form-control form-control-sm reportrange-text d-flex align-items-center">
+                                                <i data-v-1ebd09d2=""
+                                                   class="glyphicon glyphicon-calendar fa fa-calendar"></i><input disabled value="{{ d21??'' }} to {{ d22??'' }}" type="text" id="period2" /><b
+                                                        data-v-1ebd09d2="" class="caret"></b></div><!----></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="cursor-pointer mt-3 mb-1">
+                                            Варианты:
+                                        </div>
+                                        <div class="btn-group mb-3">
+                                            <button class="btn btn-secondary">Прошлая и позапрошлая недели</button>
+                                            <button class="btn btn-secondary">апрель и май</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="mt-1 font-weight-light">Формула расчета: B - A</div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <footer id="comparePeriodsModal___BV_modal_footer_" class="modal-footer"><!---->
+                            <button onclick="getCompare()" type="button" class="btn btn-success">
+                                Сравнить
+                            </button>
+                        </footer>
+                    </div>
+                    <span tabindex="0"></span></div>
+            </div>
+            <div onclick="closeCompare()" id="comparePeriodsModal" style="background-color: #000000b8;" class="modal-backdrop">
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            newDatePicker('period1', function () {}, "d.m.Y")
+            newDatePicker('period2', function () {}, "d.m.Y")
+        })
+        function closeCompare(){
+            let modal = document.getElementById("comparePeriodsModal___BV_modal_outer_")
+            modal.style.display = modal.style.display === "none"?"block":"none"
+        }
+        function getCompare(){
+            let d1 = document.getElementById("period1").value, d2 = document.getElementById("period2").value
+            window.location.href =`{{path("compare")}}?d1=${d1}&d2=${d2}`
+        }
+    </script>
+{% endblock %}

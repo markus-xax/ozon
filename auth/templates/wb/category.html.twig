@@ -1,0 +1,104 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../../styles/index/styles.css" rel="stylesheet">
+    <link href="../../styles/index/vendor.css" rel="stylesheet">
+    <link href="../../styles/summary/summary.css" rel="stylesheet">
+    <link href="../../styles/summary/table.css" rel="stylesheet">
+    <link href="../../styles/summary/table2.css" rel="stylesheet">
+    <link href="../../styles/seo/selection.css" rel="stylesheet">
+    <link href="../../styles/seo/slider.css" rel="stylesheet">
+    <link href="../../styles/seo/table.css" rel="stylesheet">
+
+    <script>
+        function collapse(element) {
+            let display = element.parentNode.children[1].style.display
+            element.parentNode.children[1].style.display = display === "block" ? "none" : "block"
+        }
+    </script>
+{% endblock %}
+{% block body %}
+    <div id="mp-stats-app" class="main-content container-fluid">
+        <div id="global-loader-block" aria-hidden="true" class="mp-loader-overlay ag-overlay hidden">
+            <div class="ag-overlay-panel">
+                <div class="ag-overlay-wrapper ag-layout-normal ag-overlay-loading-wrapper">
+                    <div class="mp-loader-static"></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center"><h1
+                            class="page-header my-0">Разделы рубрикатора</h1>
+                    <div class="d-flex justify-content-between align-items-center"><label
+                                for="filter-categories"
+                                class="mb-0 mr-2">Поиск
+                            категории</label> <input id="filter-categories" type="text"></div>
+                </div> <!----></div>
+            <div id="page-categories-container" class="row">
+                {% for category in categories %}
+                    <div class="col-xs-12 col-md-4">
+                        <div class="card bg-light">
+                            <div onclick="collapse(this)" role="tab"
+                                 class="card-header cursor-pointer py-1 px-3 mx-0 d-flex justify-content-between align-items-center collapsed"
+                                 tabindex="0" aria-expanded="false"
+                                 aria-controls="category-accordion-8d5e7e72f12067991186cdf3cb7d5d9d"
+                                 style="overflow-anchor: none;">
+                                <span>{{ category.name }}</span>
+                                <i class="fas fa-caret-down">&#9660;</i>
+                            </div>
+                            <div id="category-accordion-8d5e7e72f12067991186cdf3cb7d5d9d" class="collapse"
+                                 role="tabpanel" style="display: none;">
+                                <ul class="list-group list-group-flush subcategories">
+                                    {% for subject in category.subjects %}
+                                        <li role="tab" class="list-group-item d-flex flex-column">
+                                            <div {{ subject.subjects|length == 0?'':'onclick="collapse(this)"' }} class="d-flex justify-content-between align-items-center cursor-pointer collapsed"
+                                                 style="overflow-anchor: none;">
+                                                <a href="/wb/category?url={{ subject.path }}">
+                                                    <span>{{ subject.name }}</span>
+                                                    <sup class="text-muted">
+                                                        <i class="fas fa-link"></i>
+                                                    </sup>
+                                                </a>
+                                                <i
+                                                   class="fas fa-caret-down cursor-pointer lead">{{ subject.subjects|length == 0?'':'&#9660;' }}</i>
+                                            </div>
+                                            <div id="category-accordion-8d5e7e72f12067991186cdf3cb7d5d9d-3c47285de656a84f0aeb9abc3c0f3596"
+                                                 class="collapse" role="tabpanel" style="display: none;">
+                                                <ul class="list-group list-group-flush mt-3">
+                                                    {% for subjects in subject.subjects %}
+                                                        <li class="list-group-item">
+                                                            <a href="/wb/category?url={{ subjects.path }}">
+                                                                <span>{{ subjects.name }}</span>
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div style="width: 100%;text-align: center;">
+                        <h1 class="card">
+                            Нет данных
+                        </h1>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div><!---->
+            <div class="snotify snotify-left_top"></div>
+            <div class="snotify snotify-left_center"></div>
+            <div class="snotify snotify-left_bottom"></div>
+            <div class="snotify snotify-right_top"></div>
+            <div class="snotify snotify-right_center"></div>
+            <div class="snotify snotify-right_bottom"></div>
+            <div class="snotify snotify-center_top"></div>
+            <div class="snotify snotify-center_center"></div>
+            <div class="snotify snotify-center_bottom"></div>
+        </div>
+    </div>
+{% endblock %}

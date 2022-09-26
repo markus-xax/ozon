@@ -1,0 +1,888 @@
+{% extends 'index/index.html.twig' %}
+{% block linkStyles %}
+    <link href="../../styles/index/styles.css" rel="stylesheet">
+    <link href="../../styles/index/vendor.css" rel="stylesheet">
+    <link href="../../styles/summary/summary.css" rel="stylesheet">
+    <link href="../../styles/summary/table.css" rel="stylesheet">
+    <link href="../../styles/summary/table2.css" rel="stylesheet">
+    <link href="../../styles/seo/selection.css" rel="stylesheet">
+    <link href="../../styles/seo/slider.css" rel="stylesheet">
+    <link href="../../styles/seo/table.css" rel="stylesheet">
+
+    <script>
+        function collapse(element) {
+            let display = element.parentNode.parentNode.children[1].style.display
+            element.parentNode.parentNode.children[1].style.display = display === "block" ? "none" : "block"
+        }
+    </script>
+{% endblock %}
+{% block body %}
+    {% include 'ozon/HTML/categorySale.html.twig' %}
+    <script>
+        let date = "{{ d1 }} to {{ d2 }}"
+        document.addEventListener("DOMContentLoaded", () => {
+            let col = [
+                {
+                    headerName: 'Фото',
+                    field: 'photo',
+                    maxWidth: 80,
+                    sortable: false,
+                    filter: false,
+                    cellRenderer: params => `<img style="height: 32px; width: 32px" src="${params.value}" />`
+                },
+                {headerName: 'SKU', field: 'sku'},
+                {headerName: 'Название', field: 'name'},
+                {headerName: 'Категория', field: 'category'},
+                {headerName: 'Бренд', field: 'brand'},
+                {headerName: 'Продавец', field: 'seller'},
+                {headerName: 'Схема', field: 'schema'},
+                {headerName: 'Наличие', field: 'balance'},
+                {headerName: 'Комментарии', field: 'comments'},
+                {headerName: 'Цена', field: 'finalPrice'},
+                {headerName: 'Был в наличии', field: 'dayInStock'},
+                {headerName: 'Продаж', field: 'sales'},
+                {headerName: 'Выручка', field: 'revenue'},
+            ]
+            let value = [
+                {% for sale in sales %}
+                {
+                    photo: '{{ sale.thumb }}',
+                    sku: {{ sale.nmId }} ,
+                    name: '{{ sale.name }}',
+                    category: '{{ sale.category }} ',
+                    brand: '{{ sale.brand }}',
+                    seller: '{{ sale.seller }}',
+                    schema: 'Retail',
+                    balance: '{{ sale.balance }} ',
+                    comments: '{{ sale.comments }}',
+                    finalPrice: '{{ sale.final_price }} ₽',
+                    dayInStock: '{{ sale.days_in_stock }} ',
+                    sales: '{{ sale.sales }}',
+                    revenue: '{{ sale.revenue }} ₽'
+                },
+                {% endfor %}
+            ]
+
+            option['columnDefs'] = col
+            option['rowData'] = value
+            option['onRowClicked'] = event => {
+                window.location.href = 'search/' + event.data.sku
+            }
+            new agGrid.Grid(document.getElementsByClassName("ag-theme-balham")[0], option)
+
+            newDatePicker('datePicker', function (date) {
+                window.location.href = "{{ path("ozon_category") }}?url={{ path }}&date=" + date
+            })
+            let el = document.getElementById("scrollbar")
+            el.addEventListener("input",
+                function () {
+                    let width = document.getElementById("table_sale").offsetWidth
+                    let value = (el.value * width / 600) / 5
+                    document.getElementById("table_sale").style.transform = "translateX(-" + value + "vh)"
+                    document.getElementById("table_sale_header").style.transform = "translateX(-" + value + "vh)"
+                }, false)
+            let el6 = document.getElementById("scrollbar6")
+            el6.addEventListener("input",
+                function () {
+                    let width = document.getElementById("table_sale6").offsetWidth
+                    let value = (el6.value * width / 1800) / 5
+                    document.getElementById("table_sale6").style.transform = "translateX(-" + value + "vh)"
+                    document.getElementById("table_sale6_header").style.transform = "translateX(-" + value + "vh)"
+                }, false)
+        })
+
+        function select(el) {
+            let id = el.id.substring(0, 10)
+            let befPrefix = "__BVID__"
+            let list = ["69", "75", "77", "79", "84", "86", "88"]
+            let afPrefix = "___BV_tab_button__"
+            for (let i = 0; i < list.length; i++) {
+                document.getElementById(befPrefix + list[i] + afPrefix).classList.remove("active")
+                document.getElementById(befPrefix + list[i]).style.display = "none"
+            }
+            document.getElementById(id).style.display = "block"
+            document.getElementById(id + afPrefix).classList.add("active")
+            switch (id) {
+                case befPrefix + "75":
+                    subCategory(id)
+                    break;
+                case befPrefix + "77":
+                    brands(id)
+                    break;
+                case befPrefix + "79":
+                    sellers(id)
+                    break;
+                case befPrefix + "84":
+                    onDay(id)
+                    break;
+                case befPrefix + "86":
+                    priceSegment()
+                    break;
+                case befPrefix + "88":
+                    compare()
+                    break;
+            }
+        }
+
+        function compare() {
+            if (document.getElementById("table_sale6").children.length > 1) return;
+            fetch(`/api/ozon/compare?path={{ path }}&url=category`, {
+                method: "GET"
+            })
+                .then(data => data.json())
+                .then(data => {
+                    let str = ``;
+                    document.getElementById('d1').innerText = data['d11'] + ' - ' + data['d12'];
+                    document.getElementById('d2').innerText = data['d21'] + ' - ' + data['d22'];
+                    document.getElementById('d12').innerText = data['d11'] + ' - ' + data['d12'];
+                    document.getElementById('d22').innerText = data['d21'] + ' - ' + data['d22'];
+                    for (let i = 0; i < data['data'].length; i++) {
+                        str += `
+                            <div style="transform: translateY(${i * 35}px); height: 35px;"
+                                                                             class="ag-row-even ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-first">
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-left d-flex justify-content-center"
+                                                                                 style="left: 0px; width: 50px;">
+                                                                                <div class="ag-grid-thumb-cell">
+                                                                                    <div>
+                                                                                        <img src="${data['data'][i]['thumb']}">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height"
+                                                                                 style="left: 50px; width: 235.11px;">
+                                                                                <a>${data['data'][i]['name']}</a>
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell"
+                                                                                 col-id="sku"
+                                                                                 style="left: 285.11px; width: 156px;">
+                                                                                <a>${data['data'][i]['sku']}</a>
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height"
+                                                                                 col-id="brand"
+                                                                                 style="left: 441.11px; width: 156px;">${data['data'][i]['brand']}
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height group-a-bg ag-right-aligned-cell"
+                                                                                 col-id="sales_count_1"
+                                                                                 style="left: 597.11px; width: 156px;">
+                                                                                ${data['data'][i]['sales_count_1']} шт
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height group-a-bg ag-right-aligned-cell"
+                                                                                 col-id="revenue_1"
+                                                                                 style="left: 753.11px; width: 156px;">
+                                                                                ${data['data'][i]['revenue_1']} ₽
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height group-a-bg ag-right-aligned-cell"
+                                                                                 col-id="pricefinal_1"
+                                                                                 style="left: 909.11px; width: 156px;">
+                                                                                ${data['data'][i]['pricefinal_1']} ₽
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height group-b-bg ag-right-aligned-cell"
+                                                                                 col-id="sales_count_2"
+                                                                                 style="left: 1065.11px; width: 156px;">
+                                                                                ${data['data'][i]['sales_count_2']} шт
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height group-b-bg ag-right-aligned-cell"
+                                                                                 col-id="revenue_2"
+                                                                                 style="left: 1221.11px; width: 156px;">
+                                                                                ${data['data'][i]['revenue_2']} ₽
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height group-b-bg ag-right-aligned-cell"
+                                                                                 col-id="pricefinal_2"
+                                                                                 style="left: 1377.11px; width: 156px;">
+                                                                                ${data['data'][i]['pricefinal_2']} ₽
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell"
+                                                                                 col-id="sales_count_diff"
+                                                                                 style="left: 1533.11px; width: 156px;">
+                                                                                ${data['data'][i]['sales_count_diff']} шт
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell"
+                                                                                 col-id="revenue_diff"
+                                                                                 style="left: 1689.11px; width: 156px;">
+                                                                                ${data['data'][i]['revenue_diff']} ₽
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-right ag-right-aligned-cell"
+                                                                                 col-id="pricefinal_diff"
+                                                                                 style="left: 1845.11px; width: 156px;">
+                                                                                ${data['data'][i]['pricefinal_diff']} ₽
+                                                                            </div>
+                                                                        </div>
+                        `
+                    }
+                    document.getElementById("table_sale6").innerHTML = str
+                    document.getElementById("table_sale6").style.height = ((data['data'].length * 35) + 15) + "px"
+                })
+        }
+
+        function apply() {
+            let min = document.getElementById("minPrc");
+            let max = document.getElementById("maxPrc");
+            let prc = document.getElementById("prcSegment");
+            priceSegment(max.value > min.value ? max.value : min.value, min.value > max.value ? max.value : min.value, prc.value)
+        }
+
+        function priceSegment(max = '', min = '', prc = '') {
+            if (document.getElementById("table_sale5").children.length > 1) return;
+            fetch(`/api/ozon/prcSegm?path={{ path }}&date={{ d1 }} to {{ d2 }}&max=${max}&min=${min}&prcSegm=${prc}&url=category`, {
+                method: "GET"
+            })
+                .then(data => data.json())
+                .then(data => {
+                    let str = ``,
+                        labels = [],
+                        barData = [[], []],
+                        lineData = [[], [], [], []],
+                        names = ["Продажи", "Выручка", "Товаров", "Продавцов", "Продавцов с продажами", "Выручка на товар"],
+                        min = document.getElementById("minPrc"),
+                        max = document.getElementById("maxPrc");
+                    document.getElementById("prcSegment").value = data['prcSegm']
+                    min.setAttribute('min', data['min'])
+                    min.value = data['min']
+                    max.value = data['max']
+                    min.setAttribute('max', data['max'])
+                    max.setAttribute('min', data['min'])
+                    max.setAttribute('max', data['max'])
+                    data = data['data']
+                    for (let i = 0; i < data.length; i++) {
+                        labels[i] = data[i]['range']
+                        barData[0][i] = data[i]['sales']
+                        barData[1][i] = data[i]['revenue']
+                        lineData[0][i] = data[i]['items']
+                        lineData[1][i] = data[i]['brands']
+                        lineData[2][i] = data[i]['brands_with_sells']
+                        lineData[3][i] = data[i]['product_revenue']
+
+                        str += `
+                            <div style="transform: translateY(${i * 35}px); height: 35px;"
+                                                                             class="ag-row-even ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-first">
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell ag-cell-range-left"
+                                                                                 col-id="min_range_price"
+                                                                                 style="left: 0px; width: 99px;"><a>${data[i]['min_range_price']} ₽</a>
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell"
+                                                                                 col-id="max_range_price"
+                                                                                 style="left: 99px; width: 80px;"><a>${data[i]['max_range_price']} ₽</a>
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell"
+                                                                                 col-id="sales"
+                                                                                 style="left: 179px; width: 96px;">${data[i]['sales']} шт
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell"
+                                                                                 col-id="revenue"
+                                                                                 style="left: 275px; width: 96px;">${data[i]['revenue']} ₽
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                                 col-id="items"
+                                                                                 style="left: 371px; width: 95px;">${data[i]['items']} шт
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                                 col-id="brands"
+                                                                                 style="left: 466px; width: 96px;">${data[i]['brands']}
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                                 col-id="brands_with_sells"
+                                                                                 style="left: 562px; width: 87px;">${data[i]['brands_with_sells']}
+                                                                            </div>
+                                                                            <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right ag-cell-range-right"
+                                                                                 col-id="product_revenue"
+                                                                                 style="left: 649px; width: 155px;">${data[i]['product_revenue']} ₽/шт
+                                                                            </div>
+                                                                        </div>
+                        `
+                    }
+                    document.getElementById("table_sale5").innerHTML = str
+                    document.getElementById("table_sale5").style.height = ((data.length * 35) + 15) + "px"
+                    mixChart('chart5', labels, names, barData, lineData)
+                })
+        }
+
+        function onDay(id) {
+            if (document.getElementById(id + "__table").children.length > 1) return;
+            fetch(`/api/ozon/category/brands?path={{ path }}&date={{ d1 }} to {{ d2 }}&url=by_date`, {method: "GET"})
+                .then(data => data.json())
+                .then(data => {
+                    let str = ``
+                    for (let i = 0; i < data.length; i++) {
+                        str += `
+                            <div comp-id="1604"
+                                                                         style="transform: translateY(${i * 35}px); height: 35px;"
+                                                                         row-index="0"
+                                                                         class="ag-row-even ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-first"
+                                                                         aria-rowindex="4" role="row" row-id="0">
+                                                                        <div comp-id="1635"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-left"
+                                                                             aria-colindex="1" tabindex="-1"
+                                                                             col-id="field" role="gridcell"
+                                                                             style="left: 0px; width: 300px;">${data[i]['name']}
+                                                                        </div>
+                                                                        <div comp-id="1636"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="2" tabindex="-1"
+                                                                             col-id="fbo_items" role="gridcell"
+                                                                             style="left: 300px; width: 100px;">
+                                                                            <span><span class="number" title="18 417 шт">${data[i]['fbo']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1637"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="3" tabindex="-1"
+                                                                             col-id="fbo_sales" role="gridcell"
+                                                                             style="left: 400px; width: 100px;">
+                                                                            <span><span class="number" title="13 074 шт">${data[i]['fbo']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1638"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="4" tabindex="-1"
+                                                                             col-id="fbo_revenue" role="gridcell"
+                                                                             style="left: 500px; width: 120px;">
+                                                                            <span><span class="number" title="6 114 054 ₽">${data[i]['fbo']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1639"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="5" tabindex="-1"
+                                                                             col-id="fbs_items" role="gridcell"
+                                                                             style="left: 620px; width: 100px;">
+                                                                            <span><span class="number" title="2 шт">${data[i]['fbs']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1640"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="6" tabindex="-1"
+                                                                             col-id="fbs_sales" role="gridcell"
+                                                                             style="left: 720px; width: 100px;">
+                                                                            <span><span class="number" title="1 шт">${data[i]['fbs']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1641"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="7" tabindex="-1"
+                                                                             col-id="fbs_revenue" role="gridcell"
+                                                                             style="left: 820px; width: 120px;">
+                                                                            <span><span class="number" title="299 ₽">${data[i]['fbs']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1642"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="8" tabindex="-1"
+                                                                             col-id="retail_items" role="gridcell"
+                                                                             style="left: 940px; width: 100px;">
+                                                                            <span><span class="number" title="706 шт">${data[i]['retail']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1643"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="9" tabindex="-1"
+                                                                             col-id="retail_sales" role="gridcell"
+                                                                             style="left: 1040px; width: 100px;">
+                                                                            <span><span class="number" title="4 383 шт">${data[i]['retail']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1644"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="10" tabindex="-1"
+                                                                             col-id="retail_revenue" role="gridcell"
+                                                                             style="left: 1140px; width: 120px;">
+                                                                            <span><span class="number" title="740 339 ₽">${data[i]['retail']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1645"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="14" tabindex="-1"
+                                                                             col-id="tot_items" role="gridcell"
+                                                                             style="left: 1580px; width: 100px;">
+                                                                            <span><span class="number" title="19 125 шт">${data[i]['retail']['items'] + data[i]['fbo']['items'] + data[i]['fbs']['items'] + data[i]['crossborder']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1646"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="15" tabindex="-1"
+                                                                             col-id="tot_sales" role="gridcell"
+                                                                             style="left: 1680px; width: 100px;">
+                                                                            <span><span class="number" title="17 458 шт">${data[i]['retail']['sales'] + data[i]['fbo']['sales'] + data[i]['fbs']['sales'] + data[i]['crossborder']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="1647"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-right tot text-right"
+                                                                             aria-colindex="16" tabindex="-1"
+                                                                             col-id="tot_revenue" role="gridcell"
+                                                                             style="left: 1780px; width: 120px;">
+                                                                            <span><span class="number" title="6 854 692 ₽">${data[i]['retail']['revenue'] + data[i]['fbo']['revenue'] + data[i]['fbs']['revenue'] + data[i]['crossborder']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2075"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="11" tabindex="-1"
+                                                                             col-id="crossborder_items" role="gridcell"
+                                                                             style="left: 1260px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['crossborder']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2076"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="12" tabindex="-1"
+                                                                             col-id="crossborder_sales" role="gridcell"
+                                                                             style="left: 1360px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['crossborder']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2077"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="13" tabindex="-1"
+                                                                             col-id="crossborder_revenue"
+                                                                             role="gridcell"
+                                                                             style="left: 1460px; width: 120px;">
+                                                                            <span><span class="number" title="0 ₽">${data[i]['crossborder']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                    </div>
+                        `
+                    }
+                    document.getElementById(id + "__table").innerHTML = str
+                    document.getElementById(id + "__table").style.height = (data.length * 35 + 20) + "px"
+                    formatter('number')
+                })
+        }
+
+        function sellers(id) {
+            if (document.getElementById(id + "__table").children.length > 1) return;
+            fetch(`/api/ozon/category/brands?path={{ path }}&date={{ d1 }} to {{ d2 }}&url=sellers`, {
+                method: "GET"
+            })
+                .then(data => data.json())
+                .then(data => {
+                    let label = [], valueRev = [], valueSale = [], str = ``
+                    for (let i = 0; i < data.length; i++) {
+                        if (i === 6) {
+                            label[i] = 'Остальные'
+                            valueSale[6] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[6] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        if (i > 6) {
+                            valueSale[6] += data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[6] += data[i]['fbs'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        if (i < 6) {
+                            label[i] = data[i]['name']
+                            valueSale[i] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[i] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        str += `
+                            <div comp-id="5772"
+                                                                         style="transform: translateY(${i * 35}px); height: 35px;"
+                                                                         row-index="0"
+                                                                         class="ag-row-even ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-first"
+                                                                         aria-rowindex="4" role="row" row-id="0">
+                                                                        <div comp-id="5804"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-left"
+                                                                             aria-colindex="1" tabindex="-1"
+                                                                             col-id="field" role="gridcell"
+                                                                             style="left: 0px; width: 300px;"><a
+                                                                                    href="/ozon/seller/${data[i]['name']}"
+                                                                                    title="Альянс" target="_blank">${data[i]['name']}</a>
+                                                                        </div>
+                                                                        <div comp-id="5805"
+                                                                             class="number ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-right-aligned-cell"
+                                                                             aria-colindex="2" tabindex="-1"
+                                                                             col-id="balance" role="gridcell"
+                                                                             style="left: 300px; width: 110px;">${data[i]['balance']}
+                                                                        </div>
+                                                                        <div comp-id="5806"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="3" tabindex="-1"
+                                                                             col-id="fbo_items" role="gridcell"
+                                                                             style="left: 410px; width: 100px;">
+                                                                            <span><span title="0 шт">${data[i]['fbo']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5807"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="4" tabindex="-1"
+                                                                             col-id="fbo_sales" role="gridcell"
+                                                                             style="left: 510px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['fbo']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5808"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="5" tabindex="-1"
+                                                                             col-id="fbo_revenue" role="gridcell"
+                                                                             style="left: 610px; width: 120px;">
+                                                                            <span><span class="number" title="0 ₽">${data[i]['fbo']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5809"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="6" tabindex="-1"
+                                                                             col-id="fbs_items" role="gridcell"
+                                                                             style="left: 730px; width: 100px;">
+                                                                            <span><span class="number" title="6 746 шт">${data[i]['fbs']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5810"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="7" tabindex="-1"
+                                                                             col-id="fbs_sales" role="gridcell"
+                                                                             style="left: 830px; width: 100px;">
+                                                                            <span><span class="number" title="101 098 шт">${data[i]['fbs']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5811"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="8" tabindex="-1"
+                                                                             col-id="fbs_revenue" role="gridcell"
+                                                                             style="left: 930px; width: 120px;">
+                                                                            <span><span class="number" title="243 703 640 ₽">${data[i]['fbs']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5812"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="9" tabindex="-1"
+                                                                             col-id="retail_items" role="gridcell"
+                                                                             style="left: 1050px; width: 100px;">
+                                                                            <span><span  class="number" title="0 шт">${data[i]['retail']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5813"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="10" tabindex="-1"
+                                                                             col-id="retail_sales" role="gridcell"
+                                                                             style="left: 1150px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['retail']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5814"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="11" tabindex="-1"
+                                                                             col-id="retail_revenue" role="gridcell"
+                                                                             style="left: 1250px; width: 120px;">
+                                                                            <span><span class="number" title="0 ₽">${data[i]['retail']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5815"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="15" tabindex="-1"
+                                                                             col-id="tot_items" role="gridcell"
+                                                                             style="left: 1690px; width: 100px;">
+                                                                            <span><span  class="number" title="6 746 шт">${data[i]['retail']['items'] + data[i]['fbo']['items'] + data[i]['fbs']['items'] + data[i]['crossborder']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5816"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="16" tabindex="-1"
+                                                                             col-id="tot_sales" role="gridcell"
+                                                                             style="left: 1790px; width: 100px;">
+                                                                            <span><span class="number" title="101 098 шт">${data[i]['retail']['sales'] + data[i]['fbo']['sales'] + data[i]['fbs']['sales'] + data[i]['crossborder']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5817"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-right tot text-right"
+                                                                             aria-colindex="17" tabindex="-1"
+                                                                             col-id="tot_revenue" role="gridcell"
+                                                                             style="left: 1890px; width: 120px;">
+                                                                            <span><span class="number" title="243 703 640 ₽">${data[i]['retail']['revenue'] + data[i]['fbo']['revenue'] + data[i]['fbs']['revenue'] + data[i]['crossborder']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="6289"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="12" tabindex="-1"
+                                                                             col-id="crossborder_items" role="gridcell"
+                                                                             style="left: 1370px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['crossborder']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="6290"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="13" tabindex="-1"
+                                                                             col-id="crossborder_sales" role="gridcell"
+                                                                             style="left: 1470px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['crossborder']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="6291"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="14" tabindex="-1"
+                                                                             col-id="crossborder_revenue"
+                                                                             role="gridcell"
+                                                                             style="left: 1570px; width: 120px;">
+                                                                            <span><span class="number" title="0 ₽">${data[i]['crossborder']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                    </div>
+                        `
+                    }
+                    document.getElementById(id + "__table").innerHTML = str
+                    formatter("number")
+                    drawDonutGraph('seller_graph1', label, valueSale, 'Продажи')
+                    drawDonutGraph('seller_graph2', label, valueRev, 'Выручка', 'right')
+                })
+        }
+
+        function brands(id) {
+            if (document.getElementById(id + "__table").children.length > 1) return;
+            fetch(`/api/ozon/category/brands?path={{ path }}&date={{ d1 }} to {{ d2 }}&url=brands`, {
+                method: "GET"
+            })
+                .then(data => data.json())
+                .then(data => {
+                    let label = [], valueRev = [], valueSale = [], str = ``
+                    for (let i = 0; i < data.length; i++) {
+                        if (i === 6) {
+                            label[i] = 'Остальные'
+                            valueSale[6] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[6] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        if (i > 6) {
+                            valueSale[6] += data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[6] += data[i]['fbs'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        if (i < 6) {
+                            label[i] = data[i]['name']
+                            valueSale[i] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[i] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        str += `
+                            <div style="transform: translateY(${i * 35}px); height: 35px;"
+                                                                         class="ag-row-even ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-first">
+                                                                        <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-left"
+                                                                             col-id="field" role="gridcell"
+                                                                             style="left: 0px; width: 300px;"><a
+                                                                                    href="/ozon/brand/${data[i]['name']}" title="1"
+                                                                                    target="_blank">${data[i]['name']}</a></div>
+                                                                        <div comp-id="5037"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="2" tabindex="-1"
+                                                                             col-id="fbo_items" role="gridcell"
+                                                                             style="left: 300px; width: 100px;">
+                                                                            <span><span title="105 шт">${data[i]['fbo']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5038"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="3" tabindex="-1"
+                                                                             col-id="fbo_sales" role="gridcell"
+                                                                             style="left: 400px; width: 100px;">
+                                                                            <span><span class="number" title="2 703 шт">${data[i]['fbo']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5039"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="4" tabindex="-1"
+                                                                             col-id="fbo_revenue" role="gridcell"
+                                                                             style="left: 500px; width: 120px;">
+                                                                            <span><span class="number" title="1 333 263 ₽">${data[i]['fbo']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5040"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="5" tabindex="-1"
+                                                                             col-id="fbs_items" role="gridcell"
+                                                                             style="left: 620px; width: 100px;">
+                                                                            <span><span title="1 шт">${data[i]['fbs']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5041"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="6" tabindex="-1"
+                                                                             col-id="fbs_sales" role="gridcell"
+                                                                             style="left: 720px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['fbs']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5042"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="7" tabindex="-1"
+                                                                             col-id="fbs_revenue" role="gridcell"
+                                                                             style="left: 820px; width: 120px;">
+                                                                            <span><span class="number" title="0 ₽">${data[i]['fbs']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5043"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="8" tabindex="-1"
+                                                                             col-id="retail_items" role="gridcell"
+                                                                             style="left: 940px; width: 100px;">
+                                                                            <span><span title="0 шт">${data[i]['retail']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5044"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="9" tabindex="-1"
+                                                                             col-id="retail_sales" role="gridcell"
+                                                                             style="left: 1040px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['retail']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5045"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="10" tabindex="-1"
+                                                                             col-id="retail_revenue" role="gridcell"
+                                                                             style="left: 1140px; width: 120px;">
+                                                                            <span><span class="number" title="0 ₽">${data[i]['retail']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5046"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="14" tabindex="-1"
+                                                                             col-id="tot_items" role="gridcell"
+                                                                             style="left: 1580px; width: 100px;">
+                                                                            <span><span title="106 шт">${data[i]['fbs']['items'] + data[i]['fbo']['items'] + data[i]['crossborder']['items'] + data[i]['retail']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5047"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="15" tabindex="-1"
+                                                                             col-id="tot_sales" role="gridcell"
+                                                                             style="left: 1680px; width: 100px;">
+                                                                            <span><span class="number" title="2 703 шт">${data[i]['fbs']['sales'] + data[i]['fbo']['sales'] + data[i]['crossborder']['sales'] + data[i]['retail']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5048"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-right tot text-right"
+                                                                             aria-colindex="16" tabindex="-1"
+                                                                             col-id="tot_revenue" role="gridcell"
+                                                                             style="left: 1780px; width: 120px;">
+                                                                            <span><span class="number" title="1 333 263 ₽">${data[i]['fbs']['revenue'] + data[i]['fbo']['revenue'] + data[i]['crossborder']['revenue'] + data[i]['retail']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5532"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="11" tabindex="-1"
+                                                                             col-id="crossborder_items" role="gridcell"
+                                                                             style="left: 1260px; width: 100px;">
+                                                                            <span><span title="0 шт">${data[i]['crossborder']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5533"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="12" tabindex="-1"
+                                                                             col-id="crossborder_sales" role="gridcell"
+                                                                             style="left: 1360px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['crossborder']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="5534"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="13" tabindex="-1"
+                                                                             col-id="crossborder_revenue"
+                                                                             role="gridcell"
+                                                                             style="left: 1460px; width: 120px;">
+                                                                            <span><span class="number"  title="0 ₽">${data[i]['crossborder']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                    </div>
+                        `
+                    }
+                    document.getElementById(id + "__table").innerHTML = str
+                    formatter("number")
+                    drawDonutGraph('brand_graph1', label, valueSale, 'Продажи')
+                    drawDonutGraph('brand_graph2', label, valueRev, 'Выручка', 'right')
+                })
+        }
+
+        function subCategory(id) {
+            if (document.getElementById(id + "__table").children.length > 1) return;
+            fetch(`/api/ozon/subCategory?url={{ path }}&date={{ d1 }} to {{ d2 }}`, {
+                method: "GET"
+            })
+                .then(data => data.json())
+                .then(data => {
+                    let label = [], valueSale = [], valueRev = [], str = ``, value = []
+                    for (let i = 0; i < data.length; i++) {
+                        if (i === 6) {
+                            label[i] = 'Остальные'
+                            valueSale[6] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[6] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        if (i > 6) {
+                            valueSale[6] += data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[6] += data[i]['fbs'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        if (i < 6) {
+                            label[i] = data[i]['name']
+                            valueSale[i] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['sales']
+                            valueRev[i] = data[i]['fbo'] === undefined ? 0 : data[i]['fbo']['revenue']
+                        }
+                        str += `
+                        <div style="transform: translateY(${i * 35}px); height: 35px;"
+                                                                         class="ag-row-even ag-row-no-focus ag-row ag-row-level-0 ag-row-position-absolute ag-row-first"
+                                                                         aria-rowindex="4" role="row">
+                                                                        <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-left"
+                                                                             style="left: 0px; width: 300px;"><span><a
+                                                                                        href="/ozon/category?url=${data[i]['parent_category']}/${data[i]['name']}&d1={{ d1 }}&d2={{ d2 }}"
+                                                                                        target="_blank">${data[i]['name']}</a></span>
+                                                                        </div>
+                                                                        <div class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="2" tabindex="-1"
+                                                                             col-id="fbo_items" role="gridcell"
+                                                                             style="left: 300px; width: 100px;">
+                                                                            <span><span class="number" title="2 073 шт">${data[i]['fbo']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2776"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="3" tabindex="-1"
+                                                                             col-id="fbo_sales" role="gridcell"
+                                                                             style="left: 400px; width: 100px;">
+                                                                            <span><span class="number" title="31 248 шт">${data[i]['fbo']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2777"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbo text-right"
+                                                                             aria-colindex="4" tabindex="-1"
+                                                                             col-id="fbo_revenue" role="gridcell"
+                                                                             style="left: 500px; width: 120px;">
+                                                                            <span><span class="number" title="14 380 920 ₽">${data[i]['fbo']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2778"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="5" tabindex="-1"
+                                                                             col-id="fbs_items" role="gridcell"
+                                                                             style="left: 620px; width: 100px;">
+                                                                            <span><span class="number" title="415 шт">${data[i]['fbs']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2779"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="6" tabindex="-1"
+                                                                             col-id="fbs_sales" role="gridcell"
+                                                                             style="left: 720px; width: 100px;">
+                                                                            <span><span class="number" title="89 613 шт">${data[i]['fbs']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2780"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height fbs text-right"
+                                                                             aria-colindex="7" tabindex="-1"
+                                                                             col-id="fbs_revenue" role="gridcell"
+                                                                             style="left: 820px; width: 120px;">
+                                                                            <span><span class="number" title="224 219 227 ₽">${data[i]['fbs']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2781"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="8" tabindex="-1"
+                                                                             col-id="retail_items" role="gridcell"
+                                                                             style="left: 940px; width: 100px;">
+                                                                            <span><span title="91 шт">${data[i]['retail']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2782"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="9" tabindex="-1"
+                                                                             col-id="retail_sales" role="gridcell"
+                                                                             style="left: 1040px; width: 100px;">
+                                                                            <span><span class="number" title="18 615 шт">${data[i]['retail']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2783"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height retail text-right"
+                                                                             aria-colindex="10" tabindex="-1"
+                                                                             col-id="retail_revenue" role="gridcell"
+                                                                             style="left: 1140px; width: 120px;">
+                                                                            <span><span class="number" title="6 391 093 ₽">${data[i]['retail']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2784"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="14" tabindex="-1"
+                                                                             col-id="tot_items" role="gridcell"
+                                                                             style="left: 1580px; width: 100px;">
+                                                                            <span><span title="2 580 шт">${data[i]['fbo']['items'] + data[i]['fbs']['items'] + data[i]['retail']['items'] + data[i]['crossborder']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2785"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height tot text-right"
+                                                                             aria-colindex="15" tabindex="-1"
+                                                                             col-id="tot_sales" role="gridcell"
+                                                                             style="left: 1680px; width: 100px;">
+                                                                            <span><span class="number" title="139 476 шт">${data[i]['fbo']['sales'] + data[i]['fbs']['sales'] + data[i]['retail']['sales'] + data[i]['crossborder']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="2786"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-range-right tot text-right"
+                                                                             aria-colindex="16" tabindex="-1"
+                                                                             col-id="tot_revenue" role="gridcell"
+                                                                             style="left: 1780px; width: 120px;">
+                                                                            <span><span class="number" title="244 991 240 ₽">${data[i]['fbo']['revenue'] + data[i]['fbs']['revenue'] + data[i]['retail']['revenue'] + data[i]['crossborder']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                        <div comp-id="3102"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="11" tabindex="-1"
+                                                                             col-id="crossborder_items" role="gridcell"
+                                                                             style="left: 1260px; width: 100px;">
+                                                                            <span><span title="1 шт">${data[i]['crossborder']['items']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="3103"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="12" tabindex="-1"
+                                                                             col-id="crossborder_sales" role="gridcell"
+                                                                             style="left: 1360px; width: 100px;">
+                                                                            <span><span class="number" title="0 шт">${data[i]['crossborder']['sales']} шт</span></span>
+                                                                        </div>
+                                                                        <div comp-id="3104"
+                                                                             class="ag-cell-value ag-cell ag-cell-not-inline-editing ag-cell-normal-height crossborder text-right"
+                                                                             aria-colindex="13" tabindex="-1"
+                                                                             col-id="crossborder_revenue"
+                                                                             role="gridcell"
+                                                                             style="left: 1460px; width: 120px;">
+                                                                            <span><span class="number" title="0 ₽">${data[i]['crossborder']['revenue']} ₽</span></span>
+                                                                        </div>
+                                                                    </div>
+                    `
+                    }
+
+                    document.getElementById(id + "__table").innerHTML = str
+                    formatter("number")
+                    drawDonutGraph('sub_graph1', label, valueSale, 'Продажи')
+                    drawDonutGraph('sub_graph2', label, valueRev, 'Выручка', 'right')
+                })
+        }
+    </script>
+
+{% endblock %}
